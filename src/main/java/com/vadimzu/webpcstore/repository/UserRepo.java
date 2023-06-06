@@ -11,6 +11,7 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author vadimzubchenko
  */
+// interface which execute CRUD operations using DB 
 public interface UserRepo extends CrudRepository<UserEntity, Long>{
     UserEntity findByUsername(String username);
 }

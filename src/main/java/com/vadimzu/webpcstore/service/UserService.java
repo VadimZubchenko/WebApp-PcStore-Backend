@@ -6,9 +6,12 @@ package com.vadimzu.webpcstore.service;
 
 import com.vadimzu.webpcstore.entity.UserEntity;
 import com.vadimzu.webpcstore.exception.UserAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.UserNotFoundException;
+import com.vadimzu.webpcstore.model.User;
 import com.vadimzu.webpcstore.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 /**
  *
@@ -17,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-// inject repository for calling entity from DB
+    // inject repository for calling entity from DB
     @Autowired
     private UserRepo userRepo;
 
@@ -28,6 +31,23 @@ public class UserService {
         }
 
         return userRepo.save(user);
+    }
+
+    public User getOne(Long id) throws UserNotFoundException {
+        UserEntity user = userRepo.findById(id).get();
+        if (user == null) {
+            throw new UserNotFoundException("User with name is not found");
+
+        }
+        return User.toModel(user);
+    }
+
+    public User deleteUser(Long id) {
+       UserEntity user = userRepo.findById(id).get();
+       userRepo.deleteById(id);
+
+        return User.toModel(user);
+
     }
 
 }
