@@ -4,42 +4,56 @@
  */
 package com.vadimzu.webpcstore.entity;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author vadimzubchenko
  */
 @Entity
-public class UserEntity {
+public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String username;
+    private Long customerID;
+    private String customerName;
     private String address;
     private String email;
 
-    public UserEntity() {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private List<OrderEntity> orders;
+
+    public CustomerEntity() {
     }
 
-    public long getId() {
-        return id;
+    public List<OrderEntity> getOrders() {
+        return orders;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
     }
 
-    public String getUsername() {
-        return username;
+    public Long getCustomerID() {
+        return customerID;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCustomerID(Long customerID) {
+        this.customerID = customerID;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getAddress() {

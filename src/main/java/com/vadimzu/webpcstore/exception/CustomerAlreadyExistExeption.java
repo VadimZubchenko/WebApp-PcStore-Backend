@@ -8,12 +8,10 @@ package com.vadimzu.webpcstore.exception;
  *
  * @author vadimzubchenko
  */
-public class UserNotFoundException extends Exception{
+public class CustomerAlreadyExistExeption extends Exception{
 
-    public UserNotFoundException(String string) {
-        super(string);
+    public CustomerAlreadyExistExeption(String message) {
+        super(message);
     }
-
-
     
 }

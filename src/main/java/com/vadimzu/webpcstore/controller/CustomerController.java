@@ -4,10 +4,10 @@
  */
 package com.vadimzu.webpcstore.controller;
 
-import com.vadimzu.webpcstore.entity.UserEntity;
-import com.vadimzu.webpcstore.exception.UserAlreadyExistExeption;
-import com.vadimzu.webpcstore.exception.UserNotFoundException;
-import com.vadimzu.webpcstore.service.UserService;
+import com.vadimzu.webpcstore.entity.CustomerEntity;
+import com.vadimzu.webpcstore.exception.CustomerAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.CustomerNotFoundException;
+import com.vadimzu.webpcstore.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,20 +24,20 @@ import org.springframework.web.bind.annotation.RestController;
  * @author vadimzubchenko
  */
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/customers")
+public class CustomerController {
 
     @Autowired
-    private UserService userService;
+    private CustomerService customerService;
 
     //saving recieved from client entity to repository
     @PostMapping
-    public ResponseEntity registration(@RequestBody UserEntity user) {
+    public ResponseEntity registration(@RequestBody CustomerEntity customer) {
         try {
-            // delegate saving entity to userService
-            userService.registration(user);
+            // delegate saving entity to customerService
+            customerService.registration(customer);
             return ResponseEntity.ok("User's saved succesfully");
-        } catch (UserAlreadyExistExeption e) {
+        } catch (CustomerAlreadyExistExeption e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
@@ -48,8 +48,8 @@ public class UserController {
     @GetMapping
     public ResponseEntity getOneUser(@RequestParam Long id) {
         try {
-            return ResponseEntity.ok(userService.getOne(id));
-        } catch (UserNotFoundException e) {
+            return ResponseEntity.ok(customerService.getOne(id));
+        } catch (CustomerNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
 
         } catch (Exception e) {
@@ -60,14 +60,11 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(userService.deleteUser(id));
-        
+            return ResponseEntity.ok(customerService.deleteUser(id));
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
         }
     }
-
-
 
 }
