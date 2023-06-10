@@ -27,20 +27,25 @@ public class OrderService {
     private CustomerRepo customerRepo;
     @Autowired
     private StaffRepo staffRepo;
+
     private Date orderDate;
 
     public OrderEntity createOrder(OrderEntity order, Long customerId, Long staffId) {
 //find customer from repo by id         
         CustomerEntity customer = customerRepo.findById(customerId).get();
-//find staff from repo by id         
-        StaffEntity staff = staffRepo.findById(staffId).get();
 //relate the order with customer              
         order.setCustomer(customer);
+//find staff from repo by id         
+        StaffEntity staff = staffRepo.findById(staffId).get();
+//relate the order with customer        
         order.setStaff(staff);
+// create current time object
         orderDate = new Date();
+// set the time into order object     
         order.setOrderDate(orderDate);
 //save new order into repo        
 
+// saving created new order into repo          
         return orderRepo.save(order);
     }
 }
