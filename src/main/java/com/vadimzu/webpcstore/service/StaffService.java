@@ -7,6 +7,7 @@ package com.vadimzu.webpcstore.service;
 import com.vadimzu.webpcstore.entity.StaffEntity;
 import com.vadimzu.webpcstore.exception.CustomerAlreadyExistExeption;
 import com.vadimzu.webpcstore.exception.CustomerNotFoundException;
+import com.vadimzu.webpcstore.model.Staff;
 import com.vadimzu.webpcstore.repository.StaffRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,13 +31,13 @@ public StaffEntity registration(StaffEntity staff) throws CustomerAlreadyExistEx
         return staffRepo.save(staff);
     }
 
-public StaffEntity getOne(Long id) throws CustomerNotFoundException {
-        StaffEntity customer = staffRepo.findById(id).get();
-        if (customer == null) {
+public Staff getOne(Long id) throws CustomerNotFoundException {
+        StaffEntity staff = staffRepo.findById(id).get();
+        if (staff == null) {
             throw new CustomerNotFoundException("Customer with name is not found");
 
         }
-        return customer;
+        return Staff.toModel(staff);
     }
 
     
