@@ -44,7 +44,7 @@ public class StaffController {
     }
 
 @GetMapping
-    public ResponseEntity getOneUser(@RequestParam Long id) {
+    public ResponseEntity getOneStaff(@RequestParam Long id) {
         try {
             return ResponseEntity.ok(staffService.getOne(id));
         } catch (Exception e) {

@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
  * @author vadimzubchenko
  */
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderID")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderID")
 public class OrderEntity {
 
     @Id

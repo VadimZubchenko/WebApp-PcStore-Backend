@@ -7,6 +7,7 @@ package com.vadimzu.webpcstore.service;
 import com.vadimzu.webpcstore.entity.CustomerEntity;
 import com.vadimzu.webpcstore.entity.OrderEntity;
 import com.vadimzu.webpcstore.entity.StaffEntity;
+import com.vadimzu.webpcstore.model.Order;
 import com.vadimzu.webpcstore.repository.OrderRepo;
 import com.vadimzu.webpcstore.repository.StaffRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class OrderService {
 
     private Date orderDate;
 
-    public OrderEntity createOrder(OrderEntity order, Long customerId, Long staffId) {
+    public Order createOrder(OrderEntity order, Long customerId, Long staffId) {
 //find customer from repo by id         
         CustomerEntity customer = customerRepo.findById(customerId).get();
 //relate the order with customer              
@@ -46,6 +47,6 @@ public class OrderService {
 //save new order into repo        
 
 // saving created new order into repo          
-        return orderRepo.save(order);
+    return Order.toModel(orderRepo.save(order));
     }
 }

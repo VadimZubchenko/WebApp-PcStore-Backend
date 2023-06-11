@@ -5,6 +5,8 @@
 package com.vadimzu.webpcstore.model;
 
 import com.vadimzu.webpcstore.entity.CustomerEntity;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -14,13 +16,24 @@ public class Customer {
 
     private long id;
     private String customerName;
+    private List<Order> orders;
+
 
     public static Customer toModel(CustomerEntity customer) {
         Customer model = new Customer();
         model.setId(customer.getCustomerID());
         model.setCustomerName(customer.getCustomerName());
+        model.setOrders(customer.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
 
         return model;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public Customer() {
