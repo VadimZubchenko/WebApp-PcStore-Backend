@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.vadimzu.webpcstore.model;
-
-import com.vadimzu.webpcstore.entity.CustomerEntity;
 import com.vadimzu.webpcstore.entity.OrderEntity;
 import java.util.Date;
 
@@ -14,21 +12,21 @@ import java.util.Date;
  */
 public class Order {
 
-private Long orderID;
-private Date orderDate;
-private Double totalPrice;
+    private Long orderID;
+    private Date orderDate;
+    private Double totalPrice;
 
-public static Order toModel(OrderEntity order){
+    public static Order toModel(OrderEntity orderEntity) {
 
-Order model = new Order();
+        Order model = new Order();
 
-model.setOrderID(order.getOrderID());
-model.setOrderDate(order.getOrderDate());
-model.setTotalPrice(order.getTotalPrice());
+        model.setOrderID(orderEntity.getOrderID());
+        model.setOrderDate(orderEntity.getOrderDate());
+        model.setTotalPrice(orderEntity.getTotalPrice());
 
-return model;
+        return model;
 
-}
+    }
 
     public Order() {
     }
@@ -57,6 +55,4 @@ return model;
         this.totalPrice = totalPrice;
     }
 
-
-    
 }

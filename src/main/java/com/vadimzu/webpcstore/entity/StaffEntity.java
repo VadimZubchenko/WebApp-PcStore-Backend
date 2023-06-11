@@ -11,12 +11,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author vadimzubchenko
  */
 @Entity
+@Table(name = "staff")
+//anotation @Json... below handles OneToMany/ManyToOne infinite in Json files, 
+//if it goes straing from Entity without Model 
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "staffID")
 public class StaffEntity {
 
     @Id

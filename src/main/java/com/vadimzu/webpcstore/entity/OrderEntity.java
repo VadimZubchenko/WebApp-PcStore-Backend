@@ -13,12 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author vadimzubchenko
  */
 @Entity
+@Table(name = "orders")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderID")
 public class OrderEntity {
 
@@ -28,6 +30,8 @@ public class OrderEntity {
 
     private Date orderDate;
     private Double totalPrice;
+    private String description;
+
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -80,4 +84,11 @@ public class OrderEntity {
         this.staff = staff;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

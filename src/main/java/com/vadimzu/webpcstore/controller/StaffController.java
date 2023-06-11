@@ -4,10 +4,8 @@
  */
 package com.vadimzu.webpcstore.controller;
 
-import com.vadimzu.webpcstore.entity.CustomerEntity;
 import com.vadimzu.webpcstore.entity.StaffEntity;
 import com.vadimzu.webpcstore.exception.CustomerAlreadyExistExeption;
-import com.vadimzu.webpcstore.exception.CustomerNotFoundException;
 import com.vadimzu.webpcstore.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

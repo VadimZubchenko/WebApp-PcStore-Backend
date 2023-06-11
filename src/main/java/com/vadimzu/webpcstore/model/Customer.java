@@ -19,13 +19,18 @@ public class Customer {
     private List<Order> orders;
 
 
-    public static Customer toModel(CustomerEntity customer) {
-        Customer model = new Customer();
-        model.setId(customer.getCustomerID());
-        model.setCustomerName(customer.getCustomerName());
-        model.setOrders(customer.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
+    //converter, which modifies CustomerEntity into model with needed properties for Client-side
+    public static Customer toModel(CustomerEntity customerEntity) {
+        Customer model;
+        model = new Customer();
+        model.setId(customerEntity.getCustomerID());
+        model.setCustomerName(customerEntity.getCustomerName());
+        model.setOrders(customerEntity.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
 
         return model;
+    }
+
+    public Customer() {
     }
 
     public List<Order> getOrders() {
@@ -36,8 +41,6 @@ public class Customer {
         this.orders = orders;
     }
 
-    public Customer() {
-    }
 
     public long getId() {
         return id;
