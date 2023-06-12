@@ -28,7 +28,7 @@ public class StaffEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long staffID;
     private String staffName;
-    private String position;
+    private String role;
     private String login;
     private String password;
 
@@ -54,12 +54,12 @@ public class StaffEntity {
         this.staffName = staffName;
     }
 
-    public String getPosition() {
-        return position;
+    public String getRole() {
+        return role;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getLogin() {
