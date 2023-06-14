@@ -14,7 +14,7 @@ import javax.persistence.*;
  * @author vadimzubchenko
  */
 @Entity
-@Table(name = "customer")
+@Table(name = "customers")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "customerID")
 public class CustomerEntity {
 

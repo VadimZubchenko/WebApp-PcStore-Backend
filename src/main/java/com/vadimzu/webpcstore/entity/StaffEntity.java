@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @author vadimzubchenko
  */
 @Entity
-@Table(name = "staff")
+@Table(name = "staffs")
 //anotation @Json... below handles OneToMany/ManyToOne infinite in Json files, 
 //if it goes straing from Entity without Model 
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "staffID")

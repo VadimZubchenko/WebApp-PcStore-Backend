@@ -8,9 +8,9 @@ package com.vadimzu.webpcstore.exception;
  *
  * @author vadimzubchenko
  */
-public class CustomerAlreadyExistExeption extends Exception{
+public class ResourceAlreadyExistExeption extends Exception{
 
-    public CustomerAlreadyExistExeption(String message) {
+    public ResourceAlreadyExistExeption(String message) {
         super(message);
     }
     

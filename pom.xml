@@ -17,10 +17,12 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+        <!--DB migration-->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+        <!--Embedded Web Server Tomcat-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

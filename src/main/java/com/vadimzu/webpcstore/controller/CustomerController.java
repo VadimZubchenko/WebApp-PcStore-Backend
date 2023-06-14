@@ -5,8 +5,8 @@
 package com.vadimzu.webpcstore.controller;
 
 import com.vadimzu.webpcstore.entity.CustomerEntity;
-import com.vadimzu.webpcstore.exception.CustomerAlreadyExistExeption;
-import com.vadimzu.webpcstore.exception.CustomerNotFoundException;
+import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
 import com.vadimzu.webpcstore.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ public class CustomerController {
             // delegate saving entity to customerService
             customerService.registration(customer);
             return ResponseEntity.ok("User's saved succesfully");
-        } catch (CustomerAlreadyExistExeption e) {
+        } catch (ResourceAlreadyExistExeption e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
@@ -49,7 +49,7 @@ public class CustomerController {
     public ResponseEntity getOneUser(@RequestParam Long id) {
         try {
             return ResponseEntity.ok(customerService.getOne(id));
-        } catch (CustomerNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
 
         } catch (Exception e) {

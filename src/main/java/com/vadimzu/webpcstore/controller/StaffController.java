@@ -5,7 +5,7 @@
 package com.vadimzu.webpcstore.controller;
 
 import com.vadimzu.webpcstore.entity.StaffEntity;
-import com.vadimzu.webpcstore.exception.CustomerAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
 import com.vadimzu.webpcstore.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author vadimzubchenko
  */
 @RestController
-@RequestMapping("/staff")
+@RequestMapping("/staffs")
 public class StaffController {
 
 @Autowired
@@ -33,7 +33,7 @@ public class StaffController {
             // delegate saving entity to StaffService
             staffService.registration(staff);
             return ResponseEntity.ok("Staff's saved succesfully");
-        } catch (CustomerAlreadyExistExeption e) {
+        } catch (ResourceAlreadyExistExeption e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request didn't pass throw");

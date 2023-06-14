@@ -5,8 +5,8 @@
 package com.vadimzu.webpcstore.service;
 
 import com.vadimzu.webpcstore.entity.StaffEntity;
-import com.vadimzu.webpcstore.exception.CustomerAlreadyExistExeption;
-import com.vadimzu.webpcstore.exception.CustomerNotFoundException;
+import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
 import com.vadimzu.webpcstore.model.Staff;
 import com.vadimzu.webpcstore.repository.StaffRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +22,19 @@ public class StaffService {
 @Autowired
 private StaffRepo staffRepo;
 
-public StaffEntity registration(StaffEntity staff) throws CustomerAlreadyExistExeption {
+public StaffEntity registration(StaffEntity staff) throws ResourceAlreadyExistExeption {
         
         if (staffRepo.findByStaffName(staff.getStaffName()) != null) {
-            throw new CustomerAlreadyExistExeption("A staff with same name already exists");
+            throw new ResourceAlreadyExistExeption("A staff with same name already exists");
         }
 
         return staffRepo.save(staff);
     }
 
-public Staff getOne(Long id) throws CustomerNotFoundException {
+public Staff getOne(Long id) throws ResourceNotFoundException {
         StaffEntity staff = staffRepo.findById(id).get();
         if (staff == null) {
-            throw new CustomerNotFoundException("Customer with name is not found");
+            throw new ResourceNotFoundException("A staff with name is not found");
 
         }
         return Staff.toModel(staff);

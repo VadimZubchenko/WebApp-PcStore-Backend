@@ -8,3 +8,6 @@
  */
 
 ALTER TABLE orders ADD description VARCHAR(255);
+UPDATE orders
+SET description='Alfred Schmidt'
+WHERE orderid=1;

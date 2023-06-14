@@ -9,35 +9,35 @@
 
 create table hibernate_sequence (
     next_val bigint
-) engine=MyISAM;
+) engine=InnoDB;
 
 insert into hibernate_sequence values ( 1 );
 insert into hibernate_sequence values ( 1 );
 
 
-create table customer (
+create table customers (
     customerid bigint not null auto_increment, 
     address varchar(255) not null, 
     customer_name varchar(255) not null unique, 
     email varchar(255), 
     primary key (customerid)
-)engine=MyISAM;
+)engine=InnoDB;
 
 create table orders (
     orderid bigint not null auto_increment, 
     order_date datetime(6) not null, 
     total_price double precision not null, 
     primary key (orderid)
-)engine=MyISAM;
+)engine=InnoDB;
 
-create table staff (
+create table staffs (
     staffid bigint not null auto_increment, 
     login varchar(255) not null, 
     password varchar(255) not null, 
     role varchar(255) not null unique, 
     staff_name varchar(255) not null unique, 
     primary key (staffid)
-)engine=MyISAM;
+)engine=InnoDB;
 
 -- alter table orders 
 --     add constraint order_customer_fk 

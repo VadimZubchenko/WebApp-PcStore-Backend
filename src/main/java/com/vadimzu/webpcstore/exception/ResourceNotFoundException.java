@@ -8,9 +8,9 @@ package com.vadimzu.webpcstore.exception;
  *
  * @author vadimzubchenko
  */
-public class CustomerNotFoundException extends Exception{
+public class ResourceNotFoundException extends Exception{
 
-    public CustomerNotFoundException(String string) {
+    public ResourceNotFoundException(String string) {
         super(string);
     }
 
