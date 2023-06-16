@@ -7,7 +7,9 @@ package com.vadimzu.webpcstore.controller;
 import com.vadimzu.webpcstore.entity.CustomerEntity;
 import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
 import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
+import com.vadimzu.webpcstore.repository.CustomerRepo;
 import com.vadimzu.webpcstore.service.CustomerService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +32,9 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CustomerRepo customerRepo;
+
     //saving recieved from client entity to repository
     @PostMapping
     public ResponseEntity registration(@RequestBody CustomerEntity customer) {
@@ -43,6 +48,13 @@ public class CustomerController {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
         }
 
+    }
+
+    @GetMapping("/all")
+    public List<CustomerEntity> getAllCustomer(){
+        
+
+        return customerRepo.findAll();
     }
 
     @GetMapping

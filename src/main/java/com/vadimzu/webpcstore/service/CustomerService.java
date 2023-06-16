@@ -11,6 +11,7 @@ import com.vadimzu.webpcstore.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.vadimzu.webpcstore.repository.CustomerRepo;
+import java.util.List;
 
 
 /**
@@ -40,6 +41,14 @@ public class CustomerService {
 
         }
         return Customer.toModel(customer);
+    }
+    public List<CustomerEntity> getAll() throws ResourceNotFoundException {
+        List<CustomerEntity> customers = customerRepo.findAll();
+        if (customers == null) {
+            throw new ResourceNotFoundException("Customer with name is not found");
+
+        }
+        return customers;
     }
 
     public Customer deleteUser(Long id) {

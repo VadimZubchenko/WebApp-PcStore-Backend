@@ -6,6 +6,7 @@ package com.vadimzu.webpcstore.controller;
 
 import com.vadimzu.webpcstore.entity.StaffEntity;
 import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
 import com.vadimzu.webpcstore.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/staffs")
 public class StaffController {
 
-@Autowired
+    @Autowired
     private StaffService staffService;
-    
-@PostMapping
+
+    @PostMapping
     public ResponseEntity registration(@RequestBody StaffEntity staff) {
         try {
             // delegate saving entity to StaffService
@@ -41,10 +42,12 @@ public class StaffController {
 
     }
 
-@GetMapping
+    @GetMapping
     public ResponseEntity getOneStaff(@RequestParam Long id) {
         try {
             return ResponseEntity.ok(staffService.getOne(id));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
         }

@@ -5,14 +5,18 @@
 package com.vadimzu.webpcstore.repository;
 
 import com.vadimzu.webpcstore.entity.CustomerEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author vadimzubchenko
  */
 // interface which execute CRUD operations using DB 
-public interface CustomerRepo extends CrudRepository<CustomerEntity, Long>{
+// later has been changed JpaRepository for calling findAll() 
+@Repository
+public interface CustomerRepo extends JpaRepository<CustomerEntity, Long>{
 //!!!name of function depends on variable name in class 'findBy***'    
 CustomerEntity findByCustomerName(String customerName);
 }
