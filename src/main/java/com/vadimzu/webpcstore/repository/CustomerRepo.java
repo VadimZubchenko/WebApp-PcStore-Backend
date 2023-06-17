@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
  *
  * @author vadimzubchenko
  */
-// interface which execute CRUD operations using DB 
-// later has been changed JpaRepository for calling findAll() 
+// interface Crud.Repos... which executes CRUD operations using DB 
+// later has been changed to JpaRepository for calling findAll() 
 @Repository
 public interface CustomerRepo extends JpaRepository<CustomerEntity, Long>{
 //!!!name of function depends on variable name in class 'findBy***'    

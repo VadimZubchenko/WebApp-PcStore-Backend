@@ -7,11 +7,10 @@ package com.vadimzu.webpcstore.controller;
 import com.vadimzu.webpcstore.entity.CustomerEntity;
 import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
 import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
-import com.vadimzu.webpcstore.repository.CustomerRepo;
 import com.vadimzu.webpcstore.service.CustomerService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,15 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author vadimzubchenko
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
-
-    @Autowired
-    private CustomerRepo customerRepo;
 
     //saving recieved from client entity to repository
     @PostMapping
@@ -51,10 +48,16 @@ public class CustomerController {
     }
 
     @GetMapping("/all")
-    public List<CustomerEntity> getAllCustomer(){
-        
+    public ResponseEntity getAllCustomers() {
+        try {
+            
+            return ResponseEntity.ok(customerService.getAll());
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
 
-        return customerRepo.findAll();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Request didn't pass throw");
+        }
     }
 
     @GetMapping
