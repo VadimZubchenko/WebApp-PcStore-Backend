@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,14 +24,28 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/customers")
+//@RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
-    //saving recieved from client entity to repository
-    @PostMapping
+    // get all customer
+    @GetMapping("/customers")
+    public ResponseEntity getAllCustomers() {
+        try {
+
+            return ResponseEntity.ok(customerService.getAll());
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Request didn't pass throw");
+        }
+    }
+
+    //Creating new customer and saving recieved from client entity to repository
+    @PostMapping("/customers")
     public ResponseEntity registration(@RequestBody CustomerEntity customer) {
         try {
             // delegate saving entity to customerService
@@ -47,21 +59,9 @@ public class CustomerController {
 
     }
 
-    @GetMapping("/all")
-    public ResponseEntity getAllCustomers() {
-        try {
-            
-            return ResponseEntity.ok(customerService.getAll());
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Request didn't pass throw");
-        }
-    }
-
-    @GetMapping
-    public ResponseEntity getOneUser(@RequestParam Long id) {
+    // Single item
+    @GetMapping("/customers/{id}")
+    public ResponseEntity getOneUser(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(customerService.getOne(id));
         } catch (ResourceNotFoundException e) {
@@ -72,7 +72,7 @@ public class CustomerController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/customers/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(customerService.deleteUser(id));

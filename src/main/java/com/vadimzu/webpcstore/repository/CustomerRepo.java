@@ -19,4 +19,5 @@ import org.springframework.stereotype.Repository;
 public interface CustomerRepo extends JpaRepository<CustomerEntity, Long>{
 //!!!name of function depends on variable name in class 'findBy***'    
 CustomerEntity findByCustomerName(String customerName);
+CustomerEntity findByEmail(String email);
 }

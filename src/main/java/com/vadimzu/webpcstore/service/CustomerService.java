@@ -37,7 +37,7 @@ public class CustomerService {
     public Customer getOne(Long id) throws ResourceNotFoundException {
         CustomerEntity customer = customerRepo.findById(id).get();
         if (customer == null) {
-            throw new ResourceNotFoundException("Customer with name is not found");
+            throw new ResourceNotFoundException("Could not find customer " +id );
 
         }
         return Customer.toModel(customer);

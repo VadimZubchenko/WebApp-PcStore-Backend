@@ -11,6 +11,7 @@ import com.vadimzu.webpcstore.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author vadimzubchenko
  */
 @RestController
-@RequestMapping("/staffs")
 public class StaffController {
 
     @Autowired
     private StaffService staffService;
 
-    @PostMapping
+    // create new staff
+    @PostMapping("/staffs")
     public ResponseEntity registration(@RequestBody StaffEntity staff) {
         try {
             // delegate saving entity to StaffService
@@ -42,8 +43,9 @@ public class StaffController {
 
     }
 
-    @GetMapping
-    public ResponseEntity getOneStaff(@RequestParam Long id) {
+    // Single staff
+    @GetMapping("/staffs/{id}")
+    public ResponseEntity getOneStaff(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(staffService.getOne(id));
         } catch (ResourceNotFoundException e) {
