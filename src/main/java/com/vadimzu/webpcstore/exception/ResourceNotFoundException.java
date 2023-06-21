@@ -10,8 +10,8 @@ package com.vadimzu.webpcstore.exception;
  */
 public class ResourceNotFoundException extends Exception{
 
-    public ResourceNotFoundException(String string) {
-        super(string);
+    public ResourceNotFoundException(String message) {
+        super(message);
     }
 
 

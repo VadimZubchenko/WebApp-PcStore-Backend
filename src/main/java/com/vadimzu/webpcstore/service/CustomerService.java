@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.vadimzu.webpcstore.repository.CustomerRepo;
 import java.util.List;
 
-
 /**
  *
  * @author vadimzubchenko
@@ -26,7 +25,7 @@ public class CustomerService {
     private CustomerRepo customerRepo;
 
     public CustomerEntity registration(CustomerEntity customer) throws ResourceAlreadyExistExeption {
-        
+
         if (customerRepo.findByCustomerName(customer.getCustomerName()) != null) {
             throw new ResourceAlreadyExistExeption("A customer with same name already exists");
         }
@@ -35,25 +34,30 @@ public class CustomerService {
     }
 
     public Customer getOne(Long id) throws ResourceNotFoundException {
-        CustomerEntity customer = customerRepo.findById(id).get();
-        if (customer == null) {
-            throw new ResourceNotFoundException("Could not find customer " +id );
+        if (!customerRepo.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("There's no customer with ID: " + id);
 
         }
+        CustomerEntity customer = customerRepo.findById(id).get();
         return Customer.toModel(customer);
     }
+
     public List<CustomerEntity> getAll() throws ResourceNotFoundException {
         List<CustomerEntity> customers = customerRepo.findAll();
         if (customers == null) {
-            throw new ResourceNotFoundException("Customer with name is not found");
+            throw new ResourceNotFoundException("There'are no registered customers in DB");
 
         }
         return customers;
     }
 
-    public Customer deleteUser(Long id) {
-       CustomerEntity customer = customerRepo.findById(id).get();
-       customerRepo.deleteById(id);
+    public Customer deleteUser(Long id) throws ResourceNotFoundException {
+        if (!customerRepo.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("There's no customer with ID: " + id);
+
+        }
+        CustomerEntity customer = customerRepo.findById(id).get();
+        customerRepo.deleteById(id);
 
         return Customer.toModel(customer);
 

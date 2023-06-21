@@ -34,7 +34,6 @@ public class CustomerController {
     @GetMapping("/customers")
     public ResponseEntity getAllCustomers() {
         try {
-
             return ResponseEntity.ok(customerService.getAll());
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -52,6 +51,7 @@ public class CustomerController {
             customerService.registration(customer);
             return ResponseEntity.ok("User's saved succesfully");
         } catch (ResourceAlreadyExistExeption e) {
+            // return message 'A customer with same....' from CustomerService 
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
@@ -59,12 +59,13 @@ public class CustomerController {
 
     }
 
-    // Single item
+    // Single customer
     @GetMapping("/customers/{id}")
     public ResponseEntity getOneUser(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(customerService.getOne(id));
         } catch (ResourceNotFoundException e) {
+            // return exception message if there's no customer with requested id∫
             return ResponseEntity.badRequest().body(e.getMessage());
 
         } catch (Exception e) {
@@ -75,7 +76,11 @@ public class CustomerController {
     @DeleteMapping("/customers/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(customerService.deleteUser(id));
+            customerService.deleteUser(id);
+            return ResponseEntity.ok("The customer with id " + id + " has been deleted");
+        } catch (ResourceNotFoundException e) {
+            // return exception message if there's no customer with id∫
+            return ResponseEntity.badRequest().body(e.getMessage());
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
