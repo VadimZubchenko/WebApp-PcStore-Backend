@@ -5,7 +5,7 @@
 package com.vadimzu.webpcstore.controller;
 
 import com.vadimzu.webpcstore.entity.CustomerEntity;
-import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.ResourceAlreadyExistException;
 import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
 import com.vadimzu.webpcstore.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ public class CustomerController {
             // delegate saving entity to customerService
             customerService.registration(customer);
             return ResponseEntity.ok("User's saved succesfully");
-        } catch (ResourceAlreadyExistExeption e) {
+        } catch (ResourceAlreadyExistException e) {
             // return message 'A customer with same....' from CustomerService 
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

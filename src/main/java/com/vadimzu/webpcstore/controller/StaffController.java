@@ -5,11 +5,13 @@
 package com.vadimzu.webpcstore.controller;
 
 import com.vadimzu.webpcstore.entity.StaffEntity;
-import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.DataAccessException;
+import com.vadimzu.webpcstore.exception.ResourceAlreadyExistException;
 import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
 import com.vadimzu.webpcstore.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author vadimzubchenko
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class StaffController {
 
@@ -35,7 +38,26 @@ public class StaffController {
             // delegate saving entity to StaffService
             staffService.registration(staff);
             return ResponseEntity.ok("Staff's saved succesfully");
-        } catch (ResourceAlreadyExistExeption e) {
+        } catch (DataAccessException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (ResourceAlreadyExistException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Request didn't pass throw");
+        }
+
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestBody StaffEntity staff) {
+
+        // TODO... login creates token and send it back to React
+        // ...token...
+        try {
+            // delegate saving entity to StaffService
+            staffService.login(staff);
+            return ResponseEntity.ok("Login is checked up and passed throw");
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request didn't pass throw");

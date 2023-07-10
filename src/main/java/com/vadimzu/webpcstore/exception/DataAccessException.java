@@ -8,10 +8,8 @@ package com.vadimzu.webpcstore.exception;
  *
  * @author vadimzubchenko
  */
-public class ResourceAlreadyExistExeption extends Exception{
-
-    public ResourceAlreadyExistExeption(String message) {
+public class DataAccessException extends Exception{
+    public DataAccessException(String message) {
         super(message);
     }
-    
 }

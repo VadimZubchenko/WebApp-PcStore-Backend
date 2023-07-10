@@ -5,7 +5,7 @@
 package com.vadimzu.webpcstore.service;
 
 import com.vadimzu.webpcstore.entity.CustomerEntity;
-import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.ResourceAlreadyExistException;
 import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
 import com.vadimzu.webpcstore.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,10 @@ public class CustomerService {
     @Autowired
     private CustomerRepo customerRepo;
 
-    public CustomerEntity registration(CustomerEntity customer) throws ResourceAlreadyExistExeption {
+    public CustomerEntity registration(CustomerEntity customer) throws ResourceAlreadyExistException {
 
         if (customerRepo.findByCustomerName(customer.getCustomerName()) != null) {
-            throw new ResourceAlreadyExistExeption("A customer with same name already exists");
+            throw new ResourceAlreadyExistException("A customer with same name already exists");
         }
 
         return customerRepo.save(customer);

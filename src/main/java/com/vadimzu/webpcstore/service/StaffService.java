@@ -5,7 +5,8 @@
 package com.vadimzu.webpcstore.service;
 
 import com.vadimzu.webpcstore.entity.StaffEntity;
-import com.vadimzu.webpcstore.exception.ResourceAlreadyExistExeption;
+import com.vadimzu.webpcstore.exception.DataAccessException;
+import com.vadimzu.webpcstore.exception.ResourceAlreadyExistException;
 import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
 import com.vadimzu.webpcstore.model.Staff;
 import com.vadimzu.webpcstore.repository.StaffRepo;
@@ -19,19 +20,60 @@ import org.springframework.stereotype.Service;
 @Service
 public class StaffService {
 
-@Autowired
-private StaffRepo staffRepo;
+    @Autowired
+    private StaffRepo staffRepo;
 
-public StaffEntity registration(StaffEntity staff) throws ResourceAlreadyExistExeption {
-        
-        if (staffRepo.findByStaffName(staff.getStaffName()) != null) {
-            throw new ResourceAlreadyExistExeption("A staff with same name already exists");
+    public StaffEntity registration(StaffEntity staff) throws ResourceAlreadyExistException,  DataAccessException {
+
+        // check if the entered login and password is empty   
+        if (staff.getLogin().isEmpty() || staff.getPassword().isEmpty()) {
+            System.out.println("Please provide name and password");
+            throw new DataAccessException("Login and password can't be empty");
+        }
+
+        // check if login and password are long enough
+        if (staff.getLogin().length() < 4 || staff.getPassword().length() < 8) {
+            throw new DataAccessException("Please provide login and password long enough");
+
+        }
+        if (staffRepo.findByLogin(staff.getLogin()) != null) {
+            throw new ResourceAlreadyExistException("A staff with same name already exists");
         }
 
         return staffRepo.save(staff);
     }
 
-public Staff getOne(Long id) throws ResourceNotFoundException {
+    public boolean login(StaffEntity staff) throws ResourceNotFoundException {
+        
+        
+        // check if the entered login and password is empty   
+        if (staff.getLogin().isEmpty() || staff.getPassword().isEmpty()) {
+            System.out.println("Please provide name and password");
+            throw new ResourceNotFoundException("Please provide name and password");
+        }
+
+        // check is there the registered staff in db
+        StaffEntity staffEntity = staffRepo.findByLogin(staff.getLogin());
+        if (staffEntity == null) {
+            System.out.println("Staff " + staff.getLogin()+ " has NOT been found in DB");
+            throw new ResourceNotFoundException("Staff with login: " + staff.getLogin()+ " has NOT been found in DB");
+        } else {
+            System.out.println("User " + staff.getLogin()+ " has been found in DB");
+        }
+
+        // check entered password match to registered password 
+        if (staff.getPassword().equals(staffRepo.findByLogin(staff.getLogin()).getPassword())) {
+            System.out.println("Your name and password match");
+            return true;
+
+        } else {
+            System.out.println("Please check your password.");
+            throw new ResourceNotFoundException("Please check your password.");
+        }
+
+    }
+
+    public Staff getOne(Long id) throws ResourceNotFoundException {
         StaffEntity staff = staffRepo.findById(id).get();
         if (staff == null) {
             throw new ResourceNotFoundException("A staff with name is not found");
@@ -40,5 +82,4 @@ public Staff getOne(Long id) throws ResourceNotFoundException {
         return Staff.toModel(staff);
     }
 
-    
 }
