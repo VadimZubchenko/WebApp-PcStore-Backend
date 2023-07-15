@@ -10,6 +10,8 @@ import java.util.Date;
  *
  * @author vadimzubchenko
  */
+
+// Model creats Order version for representation on Client side
 public class Order {
 
     private Long orderID;

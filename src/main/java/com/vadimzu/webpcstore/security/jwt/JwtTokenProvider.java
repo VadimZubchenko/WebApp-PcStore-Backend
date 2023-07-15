@@ -15,6 +15,7 @@ import java.util.Base64;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +37,7 @@ public class JwtTokenProvider {
     @Value("${jwt.token.expired}")
     private long validityInMillisec;
 
+    @Autowired
     private UserDetailsService userDetailsService;
 
     // encoder for using for changing password to hash
@@ -97,7 +99,5 @@ public class JwtTokenProvider {
     public String getStaffLogin(String token) {
         return Jwts.parser().setSigningKey(secretWord).parseClaimsJws(token).getBody().getSubject();
     }
-
-    
 
 }

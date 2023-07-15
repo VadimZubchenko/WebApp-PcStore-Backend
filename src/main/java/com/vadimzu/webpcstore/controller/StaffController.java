@@ -55,8 +55,7 @@ public class StaffController {
         // ...token...
         try {
             // delegate saving entity to StaffService
-            staffService.login(staff);
-            return ResponseEntity.ok("Login is checked up and passed throw");
+            return ResponseEntity.ok(staffService.login(staff));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

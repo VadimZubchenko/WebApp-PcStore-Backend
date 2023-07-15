@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 public class StaffService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
+    
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -59,7 +60,7 @@ public class StaffService {
         return staffRepo.save(staff);
     }
 
-    public boolean login(StaffEntity staff) throws ResourceNotFoundException {
+    public Map<Object, Object> login(StaffEntity staff) throws ResourceNotFoundException {
 
         try {
             String staffLogin = staff.getLogin();
@@ -76,9 +77,10 @@ public class StaffService {
             Map<Object, Object> response = new HashMap<>();
             response.put("staffLogin", staffLogin);
             response.put("token", token);
-            System.out.println("Responce:" + response.toString());
-            System.out.println("Your name, password match and you've got a token: " + token);
-            return true;
+            System.out.println("Responce:" + response);
+            
+            
+            return response;
 
         } catch (Exception e) {
             throw new BadCredentialsException("Invalid login or password");
@@ -116,12 +118,12 @@ public class StaffService {
     //    }
     //    
     public Staff getOne(Long id) throws ResourceNotFoundException {
-        StaffEntity staff = staffRepo.findById(id).get();
-        if (staff == null) {
+        StaffEntity staffEntity = staffRepo.findById(id).get();
+        if (staffEntity == null) {
             throw new ResourceNotFoundException("A staff with name is not found");
 
         }
-        return Staff.toModel(staff);
+        return Staff.toModel(staffEntity);
     }
 
 }

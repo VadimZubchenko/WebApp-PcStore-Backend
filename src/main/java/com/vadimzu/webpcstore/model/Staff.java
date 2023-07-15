@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
  *
  * @author vadimzubchenko
  */
+// Model creats Staff version for representation on Client side
 public class Staff {
 
 private Long staffId;

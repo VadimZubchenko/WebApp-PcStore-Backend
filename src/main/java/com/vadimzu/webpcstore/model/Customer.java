@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
  *
  * @author vadimzubchenko
  */
+
+// Model creats version of customer for representation on Client side
 public class Customer {
 
     private long id;
