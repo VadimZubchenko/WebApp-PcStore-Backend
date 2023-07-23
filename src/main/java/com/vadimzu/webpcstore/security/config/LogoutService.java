@@ -37,6 +37,7 @@ public class LogoutService implements LogoutHandler {
         }
         jwt = bearerToken.substring(7);
         storedToken = staffService.getResponse().remove(jwt);
+        System.out.println("Responce after logout: " + staffService.getResponse());
         SecurityContextHolder.clearContext();
     }
 

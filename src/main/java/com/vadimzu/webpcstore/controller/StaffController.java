@@ -66,23 +66,6 @@ public class StaffController {
 
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity logout(@RequestHeader("token") String token) {
-        
-        // TODO... login creates token and send it back to React
-        // ...token...
-        try {
-
-            // delegate saving entity to StaffService
-            return ResponseEntity.ok(staffService.logout(token));
-        } catch (ResourceNotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Request didn't pass throw");
-        }
-
-    }
-
     // Single staff
     @GetMapping("/staffs/{id}")
     public ResponseEntity getOneStaff(@PathVariable Long id) {

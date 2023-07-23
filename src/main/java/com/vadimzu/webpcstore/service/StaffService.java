@@ -85,7 +85,7 @@ public class StaffService {
             response.put("staffLogin", staffLogin);
             response.put("token", token);
 
-            System.out.println("Responce:" + response);
+            System.out.println("StaffService Responce :" + response);
 
             return response;
 
@@ -94,26 +94,6 @@ public class StaffService {
         }
     }
 
-    public Boolean logout(String token) throws ResourceNotFoundException {
-        try {
-
-            if (token == null) {
-
-                throw new ResourceNotFoundException("Token not found");
-
-            }
-            System.out.println("Deleted token: " + token);
-            
-            response.remove(token);
-            
-            System.out.println("Responce:" + response);
-            
-            return true;
-        } catch (Exception e) {
-
-            throw new BadCredentialsException("Invalid token" + e);
-        }
-    }
     //     first version without token 
     //        // check if the entered login and password is empty   
     //        if (staff.getLogin().isEmpty() || staff.getPassword().isEmpty()) {
