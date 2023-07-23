@@ -4,7 +4,6 @@
  */
 package com.vadimzu.webpcstore.security.jwt;
 
-import com.vadimzu.webpcstore.entity.StaffEntity;
 import com.vadimzu.webpcstore.exception.JwtAuthenticationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -70,6 +69,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
+        //create userDetails with 
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getStaffLogin(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }

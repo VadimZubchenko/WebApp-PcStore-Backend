@@ -26,17 +26,23 @@ public class JwtTokenFilter extends GenericFilterBean {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    // Filter checks every request coming from client
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        //Fetch token, if it exist, from request via JwtTokenProvider
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
-
+        //check validation time till present time of fetched token via JwtTokenProvider
         if (token != null && jwtTokenProvider.validateToken(token)) {
+            // 
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             
             if (authentication != null) {
+                //the token gets generated, and the application will hold the token, 
+                // which will be stored in the Security Context interface.
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
+        //here if there's no token yet or it's life time is expired 
         chain.doFilter(request, response);
     }
     

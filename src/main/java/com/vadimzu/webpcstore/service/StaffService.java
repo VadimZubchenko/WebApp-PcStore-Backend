@@ -12,6 +12,7 @@ import com.vadimzu.webpcstore.model.Staff;
 import com.vadimzu.webpcstore.repository.StaffRepo;
 import com.vadimzu.webpcstore.security.jwt.JwtTokenProvider;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,13 @@ import org.springframework.stereotype.Service;
 public class StaffService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
-    
+
+    public Map<Object, Object> getResponse() {
+        return response;
+    }
+
+    Map<Object, Object> response;
+
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -74,12 +81,12 @@ public class StaffService {
 
             String token = jwtTokenProvider.createToken(staffLogin, staffEntity.getRole());
 
-            Map<Object, Object> response = new HashMap<>();
+            response = new HashMap<>();
             response.put("staffLogin", staffLogin);
             response.put("token", token);
+
             System.out.println("Responce:" + response);
-            
-            
+
             return response;
 
         } catch (Exception e) {
@@ -87,7 +94,27 @@ public class StaffService {
         }
     }
 
-//     first version without token 
+    public Boolean logout(String token) throws ResourceNotFoundException {
+        try {
+
+            if (token == null) {
+
+                throw new ResourceNotFoundException("Token not found");
+
+            }
+            System.out.println("Deleted token: " + token);
+            
+            response.remove(token);
+            
+            System.out.println("Responce:" + response);
+            
+            return true;
+        } catch (Exception e) {
+
+            throw new BadCredentialsException("Invalid token" + e);
+        }
+    }
+    //     first version without token 
     //        // check if the entered login and password is empty   
     //        if (staff.getLogin().isEmpty() || staff.getPassword().isEmpty()) {
     //            System.out.println("Please provide name and password");
@@ -117,6 +144,7 @@ public class StaffService {
     //        
     //    }
     //    
+
     public Staff getOne(Long id) throws ResourceNotFoundException {
         StaffEntity staffEntity = staffRepo.findById(id).get();
         if (staffEntity == null) {
