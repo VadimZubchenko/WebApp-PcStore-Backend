@@ -6,6 +6,7 @@ package com.vadimzu.webpcstore.security.jwt;
 
 import com.vadimzu.webpcstore.exception.JwtAuthenticationException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -14,6 +15,7 @@ import java.util.Base64;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +31,7 @@ import org.springframework.stereotype.Component;
  * @author vadimzubchenko
  */
 @Component
+@Slf4j
 public class JwtTokenProvider {
 
     @Value("${jwt.token.secretWord}")
@@ -75,9 +78,9 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest req) {
-        String bearerToken = req.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer_")) {
-            return bearerToken.substring(7, bearerToken.length());
+        String bearerToken = req.getHeader("Token");
+        if (bearerToken != null && bearerToken.startsWith("")) {
+            return bearerToken.substring(0, bearerToken.length());
         }
         return null;
     }
@@ -86,14 +89,14 @@ public class JwtTokenProvider {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretWord).parseClaimsJws(token);
 
-            if (claims.getBody().getExpiration().before(new Date())) {
-                return false;
-            }
-
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtAuthenticationException("JWT token is expired or invalid");
+        } catch (ExpiredJwtException e){
+            log.info("IN token is Expired: ", e);
+        } 
+        catch (JwtException | IllegalArgumentException e) {
+            throw new JwtAuthenticationException("JWT token is invalid", e);
         }
+        return false;
     }
 
     public String getStaffLogin(String token) {
