@@ -29,14 +29,14 @@ public class LogoutService implements LogoutHandler {
             HttpServletResponse resp,
             Authentication authentication
     ) {
-        final String bearerToken = req.getHeader("Token");
+        final String bearerToken = req.getHeader("token");
         final String jwt;
         Object storedToken;
-        if (bearerToken == null && !bearerToken.startsWith("")) {
+        if (bearerToken == null && !bearerToken.startsWith("Bearer_")) {
             return;
         }
-        jwt = bearerToken.substring(0);
-        //storedToken = staffService.getResponse().remove(jwt);
+        jwt = bearerToken.substring(7);
+        storedToken = staffService.getResponse().remove(jwt);
         System.out.println("Responce after logout: " + staffService.getResponse());
         SecurityContextHolder.clearContext();
     }
