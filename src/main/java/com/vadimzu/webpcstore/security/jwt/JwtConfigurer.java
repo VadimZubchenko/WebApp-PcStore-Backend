@@ -4,9 +4,12 @@
  */
 package com.vadimzu.webpcstore.security.jwt;
 
+import com.vadimzu.webpcstore.service.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -14,19 +17,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  *
  * @author vadimzubchenko
  */
-public class JwtConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity>{
-    
-    private JwtTokenProvider jwtTokenProvider;
+//@RequiredArgsConstructor
+public class JwtConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    public JwtConfigurer(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
+    private JwtService jwtService;
+    
+
+    public JwtConfigurer(JwtService jwtService) {
+        this.jwtService = jwtService;
+        
     }
 
     @Override
     public void configure(HttpSecurity builder) throws Exception {
-        JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
+        JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtService);
         builder.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
-    
-    
+
 }

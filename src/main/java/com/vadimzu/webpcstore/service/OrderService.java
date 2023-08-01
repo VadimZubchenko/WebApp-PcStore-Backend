@@ -11,9 +11,9 @@ import com.vadimzu.webpcstore.model.Order;
 import com.vadimzu.webpcstore.repository.OrderRepo;
 import com.vadimzu.webpcstore.repository.StaffRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.vadimzu.webpcstore.repository.CustomerRepo;
 import java.util.Date;
+import org.springframework.stereotype.Service;
 
 /**
  *

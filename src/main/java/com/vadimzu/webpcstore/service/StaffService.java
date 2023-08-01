@@ -41,7 +41,7 @@ public class StaffService {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private JwtService jwtService;
     @Autowired
     private StaffRepo staffRepo;
 
@@ -68,10 +68,17 @@ public class StaffService {
     }
 
     public Map<Object, Object> login(StaffEntity staff) throws ResourceNotFoundException {
-
         try {
             String staffLogin = staff.getLogin();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(staffLogin, staff.getPassword()));
+            String password = staff.getPassword();
+
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            staffLogin,
+                            password
+                    )
+            );
+            // find staffEntity in db via it's login
             StaffEntity staffEntity = staffRepo.findByLogin(staffLogin);
 
             if (staffLogin == null) {
@@ -79,7 +86,7 @@ public class StaffService {
                 throw new ResourceNotFoundException("Staff with login: " + staff.getLogin() + " has NOT been found in DB");
             }
 
-            String token = jwtTokenProvider.createToken(staffLogin, staffEntity.getRole());
+            String token = jwtService.generateToken(staffEntity);
 
             response = new HashMap<>();
             response.put("staffLogin", staffLogin);
@@ -124,7 +131,6 @@ public class StaffService {
     //        
     //    }
     //    
-
     public Staff getOne(Long id) throws ResourceNotFoundException {
         StaffEntity staffEntity = staffRepo.findById(id).get();
         if (staffEntity == null) {
