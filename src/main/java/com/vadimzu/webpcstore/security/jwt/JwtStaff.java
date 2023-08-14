@@ -22,7 +22,8 @@ public class JwtStaff implements UserDetails {
     private final Collection<? extends GrantedAuthority> authorities;
     private final boolean enabled;
 
-    public JwtStaff(Long staffID,
+    public JwtStaff(
+            Long staffID,
             String staffName,
             String login,
             String password,

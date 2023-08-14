@@ -16,9 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,8 +37,18 @@ public class JwtService {
     @Value("${jwt.token.expired}")
     private long validityInMillisec;
 
+    @Autowired
     private UserDetailsService userDetailsService;
 
+    
+    // encoder for using for changing password to hash
+    // which is used by authenticationManager in StaffSErvice
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
+    
     public UserDetails  getUserDetails(String staffLogin) {
         return userDetailsService.loadUserByUsername(staffLogin);
     }
@@ -63,17 +76,18 @@ public class JwtService {
         final String authToken = req.getHeader("Token");
         if (authToken != null && authToken.startsWith("")) {
             //return extracted token
-            return authToken.substring(0);
+            return authToken.substring(0, authToken.length());
         }
         return null;
     }
 
     public String extractLogin(String authToken) {
+        // extarct some certain claim from token, a subject with login
         return extractClaim(authToken, Claims::getSubject);
     }
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
+    // to extract a certain data of claim from token
+    public <T> T extractClaim(String authToken, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(authToken);
         return claimsResolver.apply(claims);
     }
 

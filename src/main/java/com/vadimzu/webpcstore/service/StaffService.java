@@ -71,7 +71,7 @@ public class StaffService {
         try {
             String staffLogin = staff.getLogin();
             String password = staff.getPassword();
-
+            //this make all authontication job itself check login & password
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             staffLogin,

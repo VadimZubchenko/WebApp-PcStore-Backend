@@ -36,13 +36,13 @@ public class JwtStaffDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String staffLogin) throws UsernameNotFoundException {
-        // create staff object using coming login name from client side 
+        // create staff object with passed login name from client side 
         StaffEntity staff = staffRepo.findByLogin(staffLogin);
         
         if (staff == null) {
             throw new UsernameNotFoundException("Staff with login " + staffLogin + " not found");
         }
-        // creating jwtStaff via JwtStaffFactory as a userDetails, 
+        // creating jwtStaff via JwtStaffFactory as a type of userDetails, 
         // which is used for authorization
         JwtStaff jwtStaff = JwtStaffFactory.create(staff);
 

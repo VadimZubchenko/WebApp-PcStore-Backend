@@ -24,8 +24,8 @@ public final class JwtStaffFactory {
 
         return new JwtStaff(
                 staff.getStaffID(),
-                staff.getLogin(),
                 staff.getStaffName(),
+                staff.getLogin(),
                 staff.getPassword(),
                 //This method provides a convenient way to create a fixed-size list
                 Arrays.asList(new SimpleGrantedAuthority(staff.getRole())),

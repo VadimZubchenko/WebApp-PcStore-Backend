@@ -42,9 +42,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             @NotNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        // Fetch token, if it exist, from request via JwtTokenProvider
+        // Fetch token, if it exist, from request via JwtService
         final String authToken = jwtService.resolveToken((HttpServletRequest) request);
-        // Extract login from token
+        // if there's no a token in the request, then contunue filterChain
+        // for authoritizatioin User and creating the token for him
+        if (authToken == null) {
+            //here if there's no token yet
+            filterChain.doFilter(request, response);
+            return;
+        }
+        // Extract login from the token
         final String staffLogin = jwtService.extractLogin(authToken);
 
         // Check if staffLogin exctracted successfully and the staff isn't authenticated yet before in S.Holder
@@ -56,12 +63,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             UserDetails userDetails = jwtService.getUserDetails(staffLogin);
 
             // Check is token's login and DB's login are same and token not expired
-            if (jwtService.isTokenValid(staffLogin, userDetails)) {
+            if (jwtService.isTokenValid(authToken, userDetails)) {
 
                 // update the authToken to updatedToken with jwtStaff(userDetails with login, password, roles.. etc)
                 UsernamePasswordAuthenticationToken updatedToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
-                        //null,cause we don't have credential when creating a jwtStaff  
+                        //null,cause we don't have credential while a jwtStaff being created 
                         null,
                         userDetails.getAuthorities());
                 // add to token request details 
@@ -72,7 +79,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(updatedToken);
             }
         }
-        //here if there's no token yet or it's life time is expired 
+        //here if there's a token life time is expired 
         filterChain.doFilter(request, response);
     }
 }
