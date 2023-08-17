@@ -39,7 +39,7 @@ public class StaffController {
         try {
             // delegate saving entity to StaffService
             staffService.registration(staff);
-            return ResponseEntity.ok("Staff's saved succesfully");
+            return ResponseEntity.status(201).body("Register success!");
         } catch (DataAccessException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (ResourceAlreadyExistException e) {

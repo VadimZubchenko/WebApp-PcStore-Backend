@@ -47,15 +47,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         // if there's no a token in the request, then contunue filterChain
         // for authoritizatioin User and creating the token for him
         if (authToken == null) {
-            //here if there's no token yet
+            //if there's no token yet
+            //switch to StaffController.login() for auth login/pass and token creating 
             filterChain.doFilter(request, response);
             return;
         }
         // Extract login from the token
         final String staffLogin = jwtService.extractLogin(authToken);
 
-        // Check if staffLogin exctracted successfully and the staff isn't authenticated yet before in S.Holder
-        // S.Holder == null means the client-side didn't connect yet and to be added into S.Holder
+        // Check if staffLogin exctracted from token successfully and the staff isn't authenticated yet in S.Holder before 
+        // S.C.Holder == null means the client-side didn't connect yet and to be added into S.Holder
         if (staffLogin != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             //create userDetail object with JwtStaffFactory based on staff(in DB) with the same staffLogin
@@ -68,9 +69,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 // update the authToken to updatedToken with jwtStaff(userDetails with login, password, roles.. etc)
                 UsernamePasswordAuthenticationToken updatedToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
-                        //null,cause we don't have credential while a jwtStaff being created 
-                        null,
-                        userDetails.getAuthorities());
+                        null,//cause we don't have credential while a jwtStaff being created 
+                        userDetails.getAuthorities()); // get a role 
                 // add to token request details 
                 updatedToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)

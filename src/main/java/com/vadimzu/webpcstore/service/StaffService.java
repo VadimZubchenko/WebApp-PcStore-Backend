@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.stereotype.Service;
 
@@ -30,13 +30,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class StaffService {
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    private Map<Object, Object> response;
+    
+    
     public Map<Object, Object> getResponse() {
         return response;
     }
 
-    Map<Object, Object> response;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -63,6 +66,8 @@ public class StaffService {
         }
         // decode password before persist into table.
         staff.setPassword(passwordEncoder.encode(staff.getPassword()));
+        // set for all role 'seller'
+        staff.setRole("seller");
 
         return staffRepo.save(staff);
     }
