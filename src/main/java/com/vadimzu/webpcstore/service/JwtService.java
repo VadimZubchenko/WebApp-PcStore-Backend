@@ -82,10 +82,10 @@ public class JwtService {
     }
 
     public String extractLogin(String authToken) {
-        // extarct some certain claim from token, a subject with login
+        // extract a subject with login from token, 
         return extractClaim(authToken, Claims::getSubject);
     }
-    // to extract a certain data of claim from token
+    // method to extract a certain data of claim from token
     public <T> T extractClaim(String jwt, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(jwt);
         return claimsResolver.apply(claims);
