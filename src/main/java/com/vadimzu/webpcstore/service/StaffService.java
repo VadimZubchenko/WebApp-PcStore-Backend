@@ -32,11 +32,13 @@ public class StaffService {
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
 
+    private Map<Object, Object> response;
+    
+    
     public Map<Object, Object> getResponse() {
         return response;
     }
 
-    Map<Object, Object> response;
 
     @Autowired
     private AuthenticationManager authenticationManager;

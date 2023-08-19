@@ -33,12 +33,13 @@ public class JwtTokenFilter extends GenericFilterBean {
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
         //check validation time till present time of fetched token via JwtTokenProvider
         if (token != null && jwtTokenProvider.validateToken(token)) {
-            // 
+            // //the authentication(user data/role) for saving in Spring Security context
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             
             if (authentication != null) {
-                //the token gets generated, and the application will hold the token, 
-                // which will be stored in the Security Context interface.
+                //the authentication(user data/role) gets generated, 
+                // which will be stored in the Security Context interface for 
+                // this request permition by Spring Security
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

@@ -8,6 +8,7 @@ import com.vadimzu.webpcstore.service.StaffService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LogoutService implements LogoutHandler {
 
     private final StaffService staffService;
@@ -31,14 +33,19 @@ public class LogoutService implements LogoutHandler {
     ) {
         final String bearerToken = req.getHeader("token");
         final String jwt;
+        
         Object storedToken;
-        if (bearerToken == null && !bearerToken.startsWith("Bearer_")) {
+        if (bearerToken == null && !bearerToken.startsWith("")) {
             return;
         }
-        jwt = bearerToken.substring(7);
+        jwt = bearerToken.substring(0);
+        
         storedToken = staffService.getResponse().remove(jwt);
-        System.out.println("Responce after logout: " + staffService.getResponse());
+        log.info("LOGOUT: Stored token has been removed value: " + storedToken);
+        
         SecurityContextHolder.clearContext();
+        log.info("LOGOUT: Secured context has been cleared value: " + SecurityContextHolder.getContext().getAuthentication());
+        
     }
 
 }
