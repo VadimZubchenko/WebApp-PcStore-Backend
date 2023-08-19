@@ -75,9 +75,9 @@ public class JwtTokenProvider {
 //        //fetch login from authToken
 //        final String staffLogin = extractLogin(authToken);
 //        //create userDetail object with JwtStaffFactory based on staff(in DB) with the same staffLogin
-//        //using a method loadUserByUsername() to fetch data from DB
+//        //using a method loadUserByUsername() in JwtStafDetailsService to fetch data from DB
 //        UserDetails userDetails = this.userDetailsService.loadUserByUsername(staffLogin);
-//        // create new jwt-token(login and roles) based on userDetails and it's authorities(roles)
+//        // create new authentication(user data and roles) based on userDetails and it's authorities(roles)
 //        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 //    }
 //    // extract the staffLogin from token

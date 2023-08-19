@@ -32,14 +32,12 @@ public class StaffService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
+
     private Map<Object, Object> response;
-    
-    
+
     public Map<Object, Object> getResponse() {
         return response;
     }
-
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -76,7 +74,9 @@ public class StaffService {
         try {
             String staffLogin = staff.getLogin();
             String password = staff.getPassword();
-            //this make all authontication job itself check login & password
+
+            // authentication request, designed for simple presentation of a username and password            
+            //this makes all authentication job itself as a checking of login & password
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             staffLogin,
@@ -86,8 +86,7 @@ public class StaffService {
             // find staffEntity in db via it's login
             StaffEntity staffEntity = staffRepo.findByLogin(staffLogin);
 
-            if (staffLogin == null) {
-                System.out.println("Staff " + staff.getLogin() + " has NOT been found in DB");
+            if (staffEntity == null) {
                 throw new ResourceNotFoundException("Staff with login: " + staff.getLogin() + " has NOT been found in DB");
             }
 
@@ -106,36 +105,6 @@ public class StaffService {
         }
     }
 
-    //     first version without token 
-    //        // check if the entered login and password is empty   
-    //        if (staff.getLogin().isEmpty() || staff.getPassword().isEmpty()) {
-    //            System.out.println("Please provide name and password");
-    //            throw new ResourceNotFoundException("Please provide name and password");
-    //        }
-    //
-    //        // check is there the registered staff in db
-    //        StaffEntity staffEntity = staffRepo.findByLogin(staff.getLogin());
-    //        if (staffEntity == null) {
-    //            System.out.println("Staff " + staff.getLogin() + " has NOT been found in DB");
-    //            throw new ResourceNotFoundException("Staff with login: " + staff.getLogin() + " has NOT been found in DB");
-    //        } else {
-    //            System.out.println("User " + staff.getLogin() + " has been found in DB");
-    //        }
-    //
-    //        // check entered password match to registered password
-    //        String rawPassword = staff.getPassword();
-    //        String encodedPassword = staffEntity.getPassword();
-    //        if (passwordEncoder.matches(rawPassword, encodedPassword)) {
-    //            System.out.println("Your name and password match");
-    //            return true;
-    //            
-    //        } else {
-    //            System.out.println("Please check your password.");
-    //            throw new ResourceNotFoundException("Please check your password.");
-    //        }
-    //        
-    //    }
-    //    
     public Staff getOne(Long id) throws ResourceNotFoundException {
         StaffEntity staffEntity = staffRepo.findById(id).get();
         if (staffEntity == null) {

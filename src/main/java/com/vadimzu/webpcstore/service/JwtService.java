@@ -71,12 +71,12 @@ public class JwtService {
                 .compact();
     }
 
-    // I. Check if coming request includes the authToken with name "Token" 
+    // I. Check if coming request includes the jwt with name "Token" 
     public String resolveToken(HttpServletRequest req) {
-        final String authToken = req.getHeader("Token");
-        if (authToken != null && authToken.startsWith("")) {
+        final String jwt = req.getHeader("Token");
+        if (jwt != null && jwt.startsWith("")) {
             //return extracted token
-            return authToken.substring(0, authToken.length());
+            return jwt.substring(0, jwt.length());
         }
         return null;
     }
@@ -86,8 +86,8 @@ public class JwtService {
         return extractClaim(authToken, Claims::getSubject);
     }
     // to extract a certain data of claim from token
-    public <T> T extractClaim(String authToken, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(authToken);
+    public <T> T extractClaim(String jwt, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(jwt);
         return claimsResolver.apply(claims);
     }
 
@@ -101,20 +101,20 @@ public class JwtService {
 
     }
 
-    // II. Check if received with authToken staffLogin and DB's login are same 
-    //     && received the authtoken doesn't expired
-    public boolean isTokenValid(String authToken, UserDetails userDetails) {
-        final String staffLogin = extractLogin(authToken);
-        return (staffLogin.equals(userDetails.getUsername())) && !isTokenExpired(authToken);
+    // II. Check if received with jwt staffLogin and DB's login are same 
+    //     && received the jwt doesn't expired
+    public boolean isTokenValid(String jwt, UserDetails userDetails) {
+        final String staffLogin = extractLogin(jwt);
+        return (staffLogin.equals(userDetails.getUsername())) && !isTokenExpired(jwt);
     }
 
-    private Date extractTokenExpiration(String authToken) {
-        return extractClaim(authToken, Claims::getExpiration);
+    private Date extractTokenExpiration(String jwt) {
+        return extractClaim(jwt, Claims::getExpiration);
     }
 
     // Check if received token expired
-    private boolean isTokenExpired(String authToken) {
-        return extractTokenExpiration(authToken).before(new Date());
+    private boolean isTokenExpired(String jwt) {
+        return extractTokenExpiration(jwt).before(new Date());
     }
 
     private Key getSignInKey() {

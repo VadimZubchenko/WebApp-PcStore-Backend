@@ -43,17 +43,17 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         // Fetch token, if it exist, from request via JwtService
-        final String authToken = jwtService.resolveToken((HttpServletRequest) request);
+        final String jwt = jwtService.resolveToken((HttpServletRequest) request);
         // if there's no a token in the request, then contunue filterChain
         // for authoritizatioin User and creating the token for him
-        if (authToken == null) {
+        if (jwt == null) {
             //if there's no token yet
             //switch to StaffController.login() for auth login/pass and token creating 
             filterChain.doFilter(request, response);
             return;
         }
         // Extract login from the token
-        final String staffLogin = jwtService.extractLogin(authToken);
+        final String staffLogin = jwtService.extractLogin(jwt);
 
         // Check if staffLogin exctracted from token successfully and the staff isn't authenticated yet in S.Holder before 
         // S.C.Holder == null means the client-side didn't connect yet and to be added into S.Holder
@@ -64,19 +64,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             UserDetails userDetails = jwtService.getUserDetails(staffLogin);
 
             // Check is token's login and DB's login are same and token not expired
-            if (jwtService.isTokenValid(authToken, userDetails)) {
-
-                // update the authToken to updatedToken with jwtStaff(userDetails with login, password, roles.. etc)
-                UsernamePasswordAuthenticationToken updatedToken = new UsernamePasswordAuthenticationToken(
+            if (jwtService.isTokenValid(jwt, userDetails)) {
+                // the first time the token for an authentication request was represented in login process
+                //create the authToken(it not a jwtToken) with jwtStaff(userDetails with login) 
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
-                        null,//cause we don't have credential while a jwtStaff being created 
+                        null,//cause we don't have credential(login/password) while a jwtStaff being created 
                         userDetails.getAuthorities()); // get a role 
                 // add to token request details 
-                updatedToken.setDetails(
+                authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
-                // UPDATING TOKEN IN SECURITY HOLDER
-                SecurityContextHolder.getContext().setAuthentication(updatedToken);
+                // settin authToken into SECURITY HOLDER to giving permistion for this request 
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
         //here if there's a token life time is expired 
@@ -93,8 +93,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 //            Authentication authentication = jwtTokenProvider.getAuthentication(token);
 //            
 //            if (authentication != null) {
-//                // the new token gets generated, and the application, 
-//                // will be stored it in the Security Context interface.
+//                // the new authentication(user Data and role) gets generatednand 
+//                // will be stored in the Security Context interface for 
+//                // give permition to this request by Spring Security
 //                SecurityContextHolder.getContext().setAuthentication(authentication);
 //            }
 //        }
