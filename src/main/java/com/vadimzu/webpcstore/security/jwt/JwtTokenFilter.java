@@ -64,7 +64,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             UserDetails userDetails = jwtService.getUserDetails(staffLogin);
 
             // Check is token's login and DB's login are same and token not expired
-            if (jwtService.isTokenValid(jwt, userDetails)) {
+//            if (jwtService.isTokenValid(jwt, userDetails)) {
                 // the first time the token for an authentication request was represented in login process
                 //create the authToken(it not a jwtToken) with jwtStaff(userDetails with login) 
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -78,7 +78,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 // settin authToken into SECURITY HOLDER to giving permistion for this request 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
-        }
+//        }
         //here if there's a token life time is expired 
         filterChain.doFilter(request, response);
     }
