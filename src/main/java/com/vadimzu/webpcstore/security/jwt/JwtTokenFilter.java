@@ -29,8 +29,10 @@ public class JwtTokenFilter extends GenericFilterBean {
     // Filter checks every request coming from client
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        
         //Fetch token, if it exist, from request via JwtTokenProvider
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
+        
         //check validation time till present time of fetched token via JwtTokenProvider
         if (token != null && jwtTokenProvider.validateToken(token)) {
             // //the authentication(user data/role) for saving in Spring Security context

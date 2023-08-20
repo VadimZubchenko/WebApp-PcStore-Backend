@@ -87,23 +87,28 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretWord).parseClaimsJws(token);
-            
-            if(claims.getBody().getExpiration().before(new Date())){
-                return false;
-            }
+            //check token validation and expiration time
+            getStaffLogin(token);
             return true;
-        } catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             log.info("IN: token is Expired: ", e);
-        } 
-        catch (JwtException | IllegalArgumentException e) {
+        } catch (JwtException | IllegalArgumentException e) {
             throw new JwtAuthenticationException("JWT token is expired or invalid", e);
         }
         return false;
     }
 
-    public String getStaffLogin(String token) {
-        return Jwts.parser().setSigningKey(secretWord).parseClaimsJws(token).getBody().getSubject();
+    //extract all claims from token and check it validation and expiration time
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(secretWord)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    // extract just login from subject of token 
+    private String getStaffLogin(String token) {
+        return getAllClaimsFromToken(token).getSubject();
     }
 
 }
