@@ -95,7 +95,7 @@ public class StaffService {
 
             String token = jwtService.generateToken(staffEntity);
 
-            return new JwtResponse(token);
+            return new JwtResponse(staffLogin, token);
 
         } catch (Exception e) {
             throw new BadCredentialsException("Invalid login or password");
