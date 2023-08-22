@@ -8,6 +8,8 @@ import com.vadimzu.webpcstore.entity.StaffEntity;
 import com.vadimzu.webpcstore.exception.DataAccessException;
 import com.vadimzu.webpcstore.exception.ResourceAlreadyExistException;
 import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
+import com.vadimzu.webpcstore.security.dtos.JwtRequest;
+import com.vadimzu.webpcstore.security.dtos.RegistrationStaffDto;
 import com.vadimzu.webpcstore.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +31,14 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
-    // create new staff
+    // pay attention! to <?> makes possible to take any kind type of response
+    // without <?> get time expired error 
     @PostMapping("/staffs")
-    public ResponseEntity registration(@RequestBody StaffEntity staff) {
+    public ResponseEntity<?> registration(@RequestBody RegistrationStaffDto registrationStaffDto) {
         try {
             // delegate saving entity to StaffService
-            staffService.registration(staff);
-            return ResponseEntity.status(201).body("Register success!");
+            staffService.registration(registrationStaffDto);
+            return ResponseEntity.status(201).body("Registration has been completed successfully.");
         } catch (DataAccessException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (ResourceAlreadyExistException e) {
@@ -47,13 +50,10 @@ public class StaffController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody StaffEntity staff) {
+    public ResponseEntity<?> login(@RequestBody JwtRequest authRequest) {
 
-        // TODO... login creates token and send it back to React
-        // ...token...
         try {
-            // delegate saving entity to StaffService
-            return ResponseEntity.ok(staffService.login(staff));
+            return ResponseEntity.ok(staffService.login(authRequest));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

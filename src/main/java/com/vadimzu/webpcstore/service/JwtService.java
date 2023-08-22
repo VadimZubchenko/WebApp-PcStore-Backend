@@ -81,9 +81,9 @@ public class JwtService {
         return null;
     }
 
-    public String extractLogin(String authToken) {
+    public String extractLogin(String jwt) {
         // extract a subject with login from token, 
-        return extractClaim(authToken, Claims::getSubject);
+        return extractClaim(jwt, Claims::getSubject);
     }
     // method to extract a certain data of claim from token
     public <T> T extractClaim(String jwt, Function<Claims, T> claimsResolver) {
@@ -91,12 +91,12 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String authToken) {
+    private Claims extractAllClaims(String jwt) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
-                .parseClaimsJws(authToken)
+                .parseClaimsJws(jwt)
                 .getBody();
 
     }

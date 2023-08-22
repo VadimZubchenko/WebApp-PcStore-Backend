@@ -4,12 +4,8 @@
  */
 package com.vadimzu.webpcstore.security.config;
 
-import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
-import com.vadimzu.webpcstore.repository.StaffRepo;
 import com.vadimzu.webpcstore.security.jwt.JwtConfigurer;
-import com.vadimzu.webpcstore.security.jwt.JwtTokenProvider;
 import com.vadimzu.webpcstore.service.JwtService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 /**
