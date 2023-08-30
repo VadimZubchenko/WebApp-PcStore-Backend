@@ -31,9 +31,9 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
-    // pay attention! to <?> makes possible to take any kind type of response
+    // pay attention! to <?> makes possible to take any kind of response type
     // without <?> get time expired error 
-    @PostMapping("/staffs")
+    @PostMapping("/registration")
     public ResponseEntity<?> registration(@RequestBody RegistrationStaffDto registrationStaffDto) {
         try {
             // delegate saving entity to StaffService

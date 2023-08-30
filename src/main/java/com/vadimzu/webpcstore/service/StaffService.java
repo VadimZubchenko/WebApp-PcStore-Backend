@@ -45,11 +45,20 @@ public class StaffService {
     public StaffEntity registration(RegistrationStaffDto reg) throws ResourceAlreadyExistException, DataAccessException {
 
         // check if the entered login and password is empty   
+        if (reg.getStaffName().isEmpty() || reg.getLogin().isEmpty()) {
+            // exception message goes with response body via StaffController 
+            throw new DataAccessException("Name and Login can't be empty");
+        }
+        // check if the entered passwords is empty   
+        if (reg.getConfirmPassword().isEmpty() || reg.getPassword().isEmpty()) {
+            throw new DataAccessException("Password and Confirmpassword can't be empty");
+        }
         if (reg.getLogin().isEmpty() || reg.getPassword().isEmpty()) {
             System.out.println("Please provide name and password");
             throw new DataAccessException("Login and password can't be empty");
         }
-
+        //set temporally confirmPassword
+        //reg.setConfirmPassword(reg.getPassword());
         if (!reg.getPassword().equals(reg.getConfirmPassword())) {
             throw new DataAccessException("Passwords are not the same");
         }
@@ -64,6 +73,7 @@ public class StaffService {
         }
         //Create new staff 
         StaffEntity staff = new StaffEntity();
+        staff.setStaffName(reg.getStaffName());
         staff.setLogin(reg.getLogin());
         staff.setPassword(passwordEncoder.encode(reg.getPassword()));// decode password before persisting into table.
         staff.setRole("seller");
