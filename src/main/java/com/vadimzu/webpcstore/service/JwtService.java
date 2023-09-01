@@ -18,10 +18,8 @@ import java.util.function.Function;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,16 +38,7 @@ public class JwtService {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    
-    // encoder for using for changing password to hash
-    // which is used by authenticationManager in StaffSErvice
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
-    
-    public UserDetails  getUserDetails(String staffLogin) {
+    public UserDetails getUserDetails(String staffLogin) {
         return userDetailsService.loadUserByUsername(staffLogin);
     }
 
@@ -85,6 +74,7 @@ public class JwtService {
         // extract a subject with login from token, 
         return extractClaim(jwt, Claims::getSubject);
     }
+
     // method to extract a certain data of claim from token
     public <T> T extractClaim(String jwt, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(jwt);

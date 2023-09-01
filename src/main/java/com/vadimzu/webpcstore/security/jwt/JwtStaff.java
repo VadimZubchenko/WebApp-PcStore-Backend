@@ -5,14 +5,19 @@
 package com.vadimzu.webpcstore.security.jwt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vadimzu.webpcstore.entity.StaffEntity;
+import java.util.Arrays;
 import java.util.Collection;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
  * @author vadimzubchenko
  */
+@Data
 public class JwtStaff implements UserDetails {
 
     private final Long staffID;
@@ -86,6 +91,18 @@ public class JwtStaff implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+    
+    //create Spring Security framework's user 
+    public static UserDetails fromUser(StaffEntity staff){
+        return new org.springframework.security.core.userdetails.User(
+                staff.getLogin(),
+                staff.getPassword(),
+                //This method provides a convenient way to create a fixed-size list
+                Arrays.asList(new SimpleGrantedAuthority(staff.getRole()))
+                //grantedAuthorities(staff.getRole()),
+                
+        );
     }
 
 }
