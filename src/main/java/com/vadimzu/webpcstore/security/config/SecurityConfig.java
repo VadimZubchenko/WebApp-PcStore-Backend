@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  *
@@ -28,8 +29,8 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private LogoutHandler logoutHandler;
+//    @Autowired
+//    private LogoutHandler logoutHandler;
 
     private final JwtConfigurer jwtConfigurer;
 
@@ -52,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(jwtConfigurer)
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .addLogoutHandler(logoutHandler)
+                .clearAuthentication(true)
+                .logoutSuccessUrl("/login")
                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
     }
 
