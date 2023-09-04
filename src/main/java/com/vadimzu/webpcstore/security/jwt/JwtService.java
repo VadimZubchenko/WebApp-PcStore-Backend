@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.vadimzu.webpcstore.service;
+package com.vadimzu.webpcstore.security.jwt;
 
 import com.vadimzu.webpcstore.entity.StaffEntity;
 import io.jsonwebtoken.Claims;

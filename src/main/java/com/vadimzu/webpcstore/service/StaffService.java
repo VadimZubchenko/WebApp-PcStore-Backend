@@ -13,6 +13,7 @@ import com.vadimzu.webpcstore.repository.StaffRepo;
 import com.vadimzu.webpcstore.security.dtos.JwtRequest;
 import com.vadimzu.webpcstore.security.dtos.JwtResponse;
 import com.vadimzu.webpcstore.security.dtos.RegistrationStaffDto;
+import com.vadimzu.webpcstore.security.jwt.JwtService;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

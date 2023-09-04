@@ -4,7 +4,7 @@
  */
 package com.vadimzu.webpcstore.security.jwt;
 
-import com.vadimzu.webpcstore.service.JwtService;
+import com.vadimzu.webpcstore.security.jwt.JwtService;
 import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

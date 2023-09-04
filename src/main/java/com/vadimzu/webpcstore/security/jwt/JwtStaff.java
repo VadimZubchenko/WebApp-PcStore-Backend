@@ -93,7 +93,7 @@ public class JwtStaff implements UserDetails {
         return enabled;
     }
     
-    //create Spring Security framework's user 
+    //create Spring Security UserDetails type user 
     public static UserDetails fromUser(StaffEntity staff){
         return new org.springframework.security.core.userdetails.User(
                 staff.getLogin(),

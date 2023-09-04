@@ -2,14 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.vadimzu.webpcstore.service;
+package com.vadimzu.webpcstore.security.jwt;
 
 import lombok.extern.slf4j.Slf4j;
 import com.vadimzu.webpcstore.entity.StaffEntity;
 import com.vadimzu.webpcstore.repository.StaffRepo;
-import com.vadimzu.webpcstore.security.jwt.JwtStaff;
-import com.vadimzu.webpcstore.security.jwt.JwtStaffFactory;
-import com.vadimzu.webpcstore.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
