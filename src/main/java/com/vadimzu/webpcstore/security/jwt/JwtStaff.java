@@ -98,7 +98,7 @@ public class JwtStaff implements UserDetails {
         return new org.springframework.security.core.userdetails.User(
                 staff.getLogin(),
                 staff.getPassword(),
-                //This method provides a convenient way to create a fixed-size list
+                //asList() method  takes the array, which is required to be converted into a List. 
                 Arrays.asList(new SimpleGrantedAuthority(staff.getRole()))
                 //grantedAuthorities(staff.getRole()),
                 
