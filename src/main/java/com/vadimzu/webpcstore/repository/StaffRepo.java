@@ -14,6 +14,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface StaffRepo extends CrudRepository<StaffEntity, Long> {
 
     StaffEntity findByStaffName(String staffName);
-    StaffEntity findByLogin(String staffName);
+    StaffEntity findByLogin(String staffLogin);
 
 }

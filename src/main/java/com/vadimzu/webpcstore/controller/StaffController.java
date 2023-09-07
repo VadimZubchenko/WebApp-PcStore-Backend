@@ -8,18 +8,16 @@ import com.vadimzu.webpcstore.entity.StaffEntity;
 import com.vadimzu.webpcstore.exception.DataAccessException;
 import com.vadimzu.webpcstore.exception.ResourceAlreadyExistException;
 import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
+import com.vadimzu.webpcstore.security.dtos.JwtRequest;
+import com.vadimzu.webpcstore.security.dtos.RegistrationStaffDto;
 import com.vadimzu.webpcstore.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,13 +31,14 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
-    // create new staff
-    @PostMapping("/staffs")
-    public ResponseEntity registration(@RequestBody StaffEntity staff) {
+    // pay attention! to <?> makes possible to take any kind of response type
+    // without <?> get time expired error 
+    @PostMapping("/registration")
+    public ResponseEntity<?> registration(@RequestBody RegistrationStaffDto registrationStaffDto) {
         try {
             // delegate saving entity to StaffService
-            staffService.registration(staff);
-            return ResponseEntity.ok("Staff's saved succesfully");
+            staffService.registration(registrationStaffDto);
+            return ResponseEntity.status(201).body("Registration has been completed successfully.");
         } catch (DataAccessException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (ResourceAlreadyExistException e) {
@@ -51,13 +50,10 @@ public class StaffController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody StaffEntity staff) {
+    public ResponseEntity<?> login(@RequestBody JwtRequest authRequest) {
 
-        // TODO... login creates token and send it back to React
-        // ...token...
         try {
-            // delegate saving entity to StaffService
-            return ResponseEntity.ok(staffService.login(staff));
+            return ResponseEntity.ok(staffService.login(authRequest));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
