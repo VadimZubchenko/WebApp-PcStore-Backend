@@ -7,8 +7,8 @@ package com.vadimzu.webpcstore.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
-
 
 /**
  *
@@ -27,7 +27,6 @@ public class OrderEntity {
     private Double totalPrice;
     private String description;
 
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
@@ -35,6 +34,9 @@ public class OrderEntity {
     @ManyToOne
     @JoinColumn(name = "staff_id")
     private StaffEntity staff;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private List<OrderDetailsEntity> orderDetails;
 
     public OrderEntity() {
     }
@@ -86,4 +88,14 @@ public class OrderEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<OrderDetailsEntity> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetailsEntity> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+    
+    
 }
