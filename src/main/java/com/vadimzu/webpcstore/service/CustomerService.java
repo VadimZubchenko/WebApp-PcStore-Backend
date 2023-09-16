@@ -45,7 +45,7 @@ public class CustomerService {
     public List<CustomerEntity> getAll() throws ResourceNotFoundException {
         List<CustomerEntity> customers = customerRepo.findAll();
         if (customers == null) {
-            throw new ResourceNotFoundException("There'are no registered customers in DB");
+            throw new ResourceNotFoundException("There are no registered customers in DB");
 
         }
         return customers;
