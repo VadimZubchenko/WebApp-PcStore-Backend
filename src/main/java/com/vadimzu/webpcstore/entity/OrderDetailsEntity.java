@@ -6,6 +6,7 @@ package com.vadimzu.webpcstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,15 +31,15 @@ public class OrderDetailsEntity {
     private Long orderDetailQuantity;
     private Double orderDetailPrice;
 
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.DETACH)
     @JoinColumn(name = "package_id")
     private PackageEntity packageEntity;
 
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.DETACH)
     @JoinColumn(name = "part_id")
     private PartEntity part;
-    
-    @ManyToOne
+
+    @ManyToOne (cascade=CascadeType.REMOVE)
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
@@ -77,14 +78,6 @@ public class OrderDetailsEntity {
         this.packageEntity = packageEntity;
     }
 
-    public PartEntity getPartEntity() {
-        return part;
-    }
-
-    public void setPartEntity(PartEntity part) {
-        this.part = part;
-    }
-
     public PartEntity getPart() {
         return part;
     }
@@ -100,7 +93,5 @@ public class OrderDetailsEntity {
     public void setOrder(OrderEntity order) {
         this.order = order;
     }
-    
-    
 
 }

@@ -6,7 +6,10 @@ package com.vadimzu.webpcstore.service;
 
 import com.vadimzu.webpcstore.entity.PartEntity;
 import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
+import com.vadimzu.webpcstore.model.Part;
 import com.vadimzu.webpcstore.repository.PartRepo;
+import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +24,21 @@ public class PartService {
     @Autowired
     private PartRepo partRepo;
 
-    public List<PartEntity> getAll() throws ResourceNotFoundException {
+    public List<Part> getAll() throws ResourceNotFoundException {
         List<PartEntity> parts = partRepo.findAll();
+        
+        // create new array for model of part
+        List<Part> modelParts = new ArrayList<>();
+        
         if (parts == null) {
             throw new ResourceNotFoundException("There are no registered parts in DB ");
         }
-        return parts;
+        //change all parts toModel
+        for(PartEntity part : parts){
+            modelParts.add(Part.toModel(part));
+            
+        }
+        return modelParts;
     }
 
 }

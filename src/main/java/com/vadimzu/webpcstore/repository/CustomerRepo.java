@@ -6,7 +6,6 @@ package com.vadimzu.webpcstore.repository;
 
 import com.vadimzu.webpcstore.entity.CustomerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
