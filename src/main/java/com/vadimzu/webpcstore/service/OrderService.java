@@ -150,6 +150,11 @@ public class OrderService {
                     }
                 }
                 orderDetails.setOrder(order);
+                if(orderDetails.getPart() != null){
+                    PartEntity part = partRepo.findByPartID(orderDetails.getPart().getPartID());
+                    part.setStockQuantity(part.getStockQuantity() - orderDetails.getOrderDetailQuantity());
+                    partRepo.save(part);
+                }
                 System.out.println("Set order: " + order.getOrderID());
                 orderDetailsRepo.save(orderDetails);
                 System.out.println("Save line ID: " + orderDetails.getOrderDetailID() + " into DB\n");
