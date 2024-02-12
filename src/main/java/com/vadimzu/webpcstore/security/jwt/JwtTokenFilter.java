@@ -4,7 +4,6 @@
  */
 package com.vadimzu.webpcstore.security.jwt;
 
-import com.vadimzu.webpcstore.security.jwt.JwtService;
 import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +48,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         // Extract login from the token
         final String staffLogin = jwtService.extractLogin(jwt);
 
-        // Check if staffLogin exctracted from token successfully and the staff isn't authenticated yet in S.Holder before 
+        // Check if staffLogin exctracted from token successfully and the staff isn't authenticated yet in S.Holder before. 
         // S.C.Holder == null means the client-side didn't connect yet and to be added into S.Holder
         if (staffLogin != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 

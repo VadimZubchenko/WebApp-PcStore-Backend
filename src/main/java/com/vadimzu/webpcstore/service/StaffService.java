@@ -52,7 +52,7 @@ public class StaffService {
         }
         // check if the entered passwords is empty   
         if (reg.getConfirmPassword().isEmpty() || reg.getPassword().isEmpty()) {
-            throw new DataAccessException("Password and Confirmpassword can't be empty");
+            throw new DataAccessException("Password and Confirm password can't be empty");
         }
         if (reg.getLogin().isEmpty() || reg.getPassword().isEmpty()) {
             System.out.println("Please provide name and password");
