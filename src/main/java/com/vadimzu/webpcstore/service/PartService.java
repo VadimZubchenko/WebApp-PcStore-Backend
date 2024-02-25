@@ -33,7 +33,7 @@ public class PartService {
         if (parts == null) {
             throw new ResourceNotFoundException("There are no registered parts in DB ");
         }
-        //change all parts toModel
+        //change all parts into toModel
         for(PartEntity part : parts){
             modelParts.add(Part.toModel(part));
             

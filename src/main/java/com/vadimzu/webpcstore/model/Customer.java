@@ -16,17 +16,37 @@ import java.util.stream.Collectors;
 // Model creats version of customer for representation on Client side
 public class Customer {
 
-    private long id;
+    private long customerID;
     private String customerName;
+    private String address;
+    private String email;
     private List<Order> orders;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
 
     //converter, which modifies CustomerEntity into model with needed properties for Client-side
     public static Customer toModel(CustomerEntity customerEntity) {
-        Customer model;
-        model = new Customer();
-        model.setId(customerEntity.getCustomerID());
+        Customer model = new Customer();
+        
+        model.setCustomerID(customerEntity.getCustomerID());
         model.setCustomerName(customerEntity.getCustomerName());
+        model.setAddress(customerEntity.getAddress());
+        model.setEmail(customerEntity.getEmail());
         model.setOrders(customerEntity.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
 
         return model;
@@ -44,12 +64,12 @@ public class Customer {
     }
 
 
-    public long getId() {
-        return id;
+    public long getCustomerID() {
+        return customerID;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCustomerID(long customerID) {
+        this.customerID = customerID;
     }
 
     public String getCustomerName() {
