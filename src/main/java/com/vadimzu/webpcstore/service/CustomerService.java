@@ -59,7 +59,7 @@ public class CustomerService {
         }
         return modelCustomers;
     }
-
+    
     public Customer deleteUser(Long id) throws ResourceNotFoundException {
         if (!customerRepo.findById(id).isPresent()) {
             throw new ResourceNotFoundException("There's no customer with ID: " + id);
@@ -70,6 +70,24 @@ public class CustomerService {
 
         return Customer.toModel(customer);
 
+    }
+    
+    public CustomerEntity updateCustomerData(CustomerEntity cust, Long id) throws ResourceNotFoundException {
+        if (!customerRepo.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("There's no customer with ID: " + id);
+        }
+        CustomerEntity customer = customerRepo.findById(id).get();
+        
+        
+        customer.setCustomerName(cust.getCustomerName());
+        customer.setAddress(cust.getAddress());
+        customer.setEmail(cust.getEmail());
+        // It's under fixing how to add order list. (may be just order number)
+        //customer.setOrders(cust.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
+        
+        
+        
+        return customerRepo.save(customer);
     }
 
 }

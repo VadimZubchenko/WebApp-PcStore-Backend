@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,6 +59,16 @@ public class CustomerController {
         }
 
     }
+    @PutMapping("/customers/{id}")
+    public ResponseEntity updateUser(@RequestBody CustomerEntity customer, @PathVariable Long id){
+    
+        try {
+            customerService.updateCustomerData(customer, id);
+            return ResponseEntity.ok("Customer data has been updated");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Request didn't pass throw");
+        }
+    }
 
     // Single customer
     @GetMapping("/customers/{id}")
@@ -72,6 +83,7 @@ public class CustomerController {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
         }
     }
+    
 
     @DeleteMapping("/customers/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
