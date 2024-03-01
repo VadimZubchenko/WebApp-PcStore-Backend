@@ -76,17 +76,15 @@ public class CustomerService {
         if (!customerRepo.findById(id).isPresent()) {
             throw new ResourceNotFoundException("There's no customer with ID: " + id);
         }
+        //Find a customer entity with the id
         CustomerEntity customer = customerRepo.findById(id).get();
         
-        
+        //Set new data into properties of the customerEntity 
         customer.setCustomerName(cust.getCustomerName());
         customer.setAddress(cust.getAddress());
         customer.setEmail(cust.getEmail());
-        // It's under fixing how to add order list. (may be just order number)
-        //customer.setOrders(cust.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
         
-        
-        
+        // save(update) the object into DB
         return customerRepo.save(customer);
     }
 

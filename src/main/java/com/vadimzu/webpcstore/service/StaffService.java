@@ -14,7 +14,9 @@ import com.vadimzu.webpcstore.security.dtos.JwtRequest;
 import com.vadimzu.webpcstore.security.dtos.JwtResponse;
 import com.vadimzu.webpcstore.security.dtos.RegistrationStaffDto;
 import com.vadimzu.webpcstore.security.jwt.JwtService;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +44,7 @@ public class StaffService {
 
      @Autowired
     private StaffRepo staffRepo;
+    
 
     public StaffEntity registration(RegistrationStaffDto reg) throws ResourceAlreadyExistException, DataAccessException {
 
@@ -105,8 +108,9 @@ public class StaffService {
             }
 
             String token = jwtService.generateToken(staffEntity);
+            String role = staffEntity.getRole();
 
-            return new JwtResponse(staffLogin, token);
+            return new JwtResponse(staffLogin, role, token);
 
         } catch (Exception e) {
             throw new BadCredentialsException("Invalid login or password");
@@ -120,6 +124,23 @@ public class StaffService {
 
         }
         return Staff.toModel(staffEntity);
+    }
+    
+    public List<Staff> getAll() throws ResourceNotFoundException {
+        List<StaffEntity> staffs = staffRepo.findAll();
+        
+        // create new array for model of customer
+        List<Staff> modelStaffs = new ArrayList<>();
+        
+        if (staffs == null) {
+            throw new ResourceNotFoundException("There are no registered customers in DB");
+            
+        }
+        //cnange all customers into toModel
+        for(StaffEntity staff : staffs){
+            modelStaffs.add(Staff.toModel(staff));
+        }
+        return modelStaffs;
     }
 
 }

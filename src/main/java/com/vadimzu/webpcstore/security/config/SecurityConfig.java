@@ -5,6 +5,7 @@
 package com.vadimzu.webpcstore.security.config;
 
 import com.vadimzu.webpcstore.security.jwt.JwtConfigurer;
+import org.hibernate.sql.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,6 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login", "/registration").permitAll()
                 .antMatchers(HttpMethod.POST, "/customers").hasAuthority("admin")
+                .antMatchers(HttpMethod.DELETE, "/customers").hasAuthority("admin")
+                .antMatchers(HttpMethod.PUT, "/customers/").hasAuthority("admin")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

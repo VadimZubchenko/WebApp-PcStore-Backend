@@ -15,5 +15,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class JwtResponse {
     private String staffLogin;
+    private String role;
     private String token; 
 }

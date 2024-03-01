@@ -73,4 +73,17 @@ public class StaffController {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
         }
     }
+    
+    // get all staffs
+    @GetMapping("/staffs")
+    public ResponseEntity getAllStaffs() {
+        try {
+            return ResponseEntity.ok(staffService.getAll());
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Request didn't pass throw");
+        }
+    }
 }
