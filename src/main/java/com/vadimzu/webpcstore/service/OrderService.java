@@ -86,7 +86,7 @@ public class OrderService {
         StaffEntity staff = staffRepo.findByLogin(staffName);
 
         //extract totalPrice from the body
-        Integer price = (Integer) body.get("totalPrice");
+        Double price = (Double) body.get("totalPrice");
         Double totalPrice = new Double(price);
 
         // Creat new order and insert all related data in
@@ -141,7 +141,7 @@ public class OrderService {
                             System.out.println("Set quantity: " + entry.getValue());
                         }
                         if (entry.getKey().equals("partPrice")) {
-                            Integer priceOne = (Integer) entry.getValue();
+                            Double priceOne = (Double) entry.getValue();
                             Double priceDouble = new Double(priceOne);
                             orderDetails.setOrderDetailPrice(priceDouble);
                             System.out.println("Set Price: " + entry.getValue());

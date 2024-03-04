@@ -31,7 +31,7 @@ public class PartEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long partID;
     private String partName;
-    private Long partPrice;
+    private Double partPrice;
     private Long stockQuantity;
     private String partType;
     private String shelfNumber;
@@ -62,11 +62,11 @@ public class PartEntity {
         this.partName = partName;
     }
 
-    public Long getPartPrice() {
+    public Double getPartPrice() {
         return partPrice;
     }
 
-    public void setPartPrice(Long partPrice) {
+    public void setPartPrice(Double partPrice) {
         this.partPrice = partPrice;
     }
 

@@ -133,7 +133,7 @@ public class StaffService {
         List<Staff> modelStaffs = new ArrayList<>();
         
         if (staffs == null) {
-            throw new ResourceNotFoundException("There are no registered customers in DB");
+            throw new ResourceNotFoundException("There are no registered staffs in DB");
             
         }
         //cnange all customers into toModel
