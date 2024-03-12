@@ -41,4 +41,9 @@ public class PartService {
         return modelParts;
     }
 
+    public PartEntity addPart(PartEntity part) {
+        return partRepo.save(part);
+        
+    }
+
 }
