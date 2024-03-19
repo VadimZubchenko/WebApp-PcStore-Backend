@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
  *
  * @author vadimzubchenko
  */
-
 // Model creats version of customer for representation on Client side
 public class Customer {
 
@@ -21,6 +20,38 @@ public class Customer {
     private String address;
     private String email;
     private List<Order> orders;
+    
+    //converter, which modifies CustomerEntity into model with needed properties for Client-side
+    public static Customer toModel(CustomerEntity customerEntity) {
+        Customer model = new Customer();
+
+        model.setCustomerID(customerEntity.getCustomerID());
+        model.setCustomerName(customerEntity.getCustomerName());
+        model.setAddress(customerEntity.getAddress());
+        model.setEmail(customerEntity.getEmail());
+        model.setOrders(customerEntity.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
+
+        return model;
+    }
+
+    public Customer() {
+    }
+
+    public long getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(long customerID) {
+        this.customerID = customerID;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     public String getAddress() {
         return address;
@@ -38,23 +69,6 @@ public class Customer {
         this.email = email;
     }
 
-
-    //converter, which modifies CustomerEntity into model with needed properties for Client-side
-    public static Customer toModel(CustomerEntity customerEntity) {
-        Customer model = new Customer();
-        
-        model.setCustomerID(customerEntity.getCustomerID());
-        model.setCustomerName(customerEntity.getCustomerName());
-        model.setAddress(customerEntity.getAddress());
-        model.setEmail(customerEntity.getEmail());
-        model.setOrders(customerEntity.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
-
-        return model;
-    }
-
-    public Customer() {
-    }
-
     public List<Order> getOrders() {
         return orders;
     }
@@ -63,21 +77,6 @@ public class Customer {
         this.orders = orders;
     }
 
-
-    public long getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(long customerID) {
-        this.customerID = customerID;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+    
 
 }

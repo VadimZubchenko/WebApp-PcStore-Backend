@@ -73,7 +73,7 @@ public class StaffController {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
         }
     }
-    
+
     // get all staffs
     @GetMapping("/staffs")
     public ResponseEntity getAllStaffs() {

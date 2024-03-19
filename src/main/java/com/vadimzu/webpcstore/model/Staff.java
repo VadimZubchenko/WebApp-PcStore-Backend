@@ -15,22 +15,20 @@ import java.util.stream.Collectors;
 // Model creats Staff version for representation on Client side
 public class Staff {
 
-private Long staffId;
-private String staffName;
-private List<Order> orders;
+    private Long staffId;
+    private String staffName;
+    private List<Order> orders;
 
-public static Staff toModel(StaffEntity staff){
+    public static Staff toModel(StaffEntity staff) {
 
-Staff model = new Staff();
+        Staff model = new Staff();
 
-model.setStaffId(staff.getStaffID());
-model.setStaffName(staff.getStaffName());
-model.setOrders(staff.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
+        model.setStaffId(staff.getStaffID());
+        model.setStaffName(staff.getStaffName());
+        model.setOrders(staff.getOrders().stream().map(Order::toModel).collect(Collectors.toList()));
 
-return model;
-
-
-}
+        return model;
+    }
 
     public Staff() {
     }
@@ -59,6 +57,4 @@ return model;
         this.orders = orders;
     }
 
-
-    
 }

@@ -9,6 +9,7 @@ import com.vadimzu.webpcstore.entity.OrderDetailsEntity;
 import com.vadimzu.webpcstore.entity.OrderEntity;
 import com.vadimzu.webpcstore.entity.PartEntity;
 import com.vadimzu.webpcstore.entity.StaffEntity;
+import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
 import com.vadimzu.webpcstore.model.Order;
 import com.vadimzu.webpcstore.repository.OrderRepo;
 import com.vadimzu.webpcstore.repository.StaffRepo;
@@ -20,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import org.springframework.boot.json.JsonParser;
-import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -151,7 +150,7 @@ public class OrderService {
                 }
                 orderDetails.setOrder(order);
                 //decrease quantity of part
-                if(orderDetails.getPart() != null){
+                if (orderDetails.getPart() != null) {
                     PartEntity part = partRepo.findByPartID(orderDetails.getPart().getPartID());
                     part.setStockQuantity(part.getStockQuantity() - orderDetails.getOrderDetailQuantity());
                     partRepo.save(part);
@@ -166,5 +165,32 @@ public class OrderService {
 
         // saving created new order into repo          
         return Order.toModel(orderRepo.save(order));
+    }
+
+    public List<Order> getAll_Orders() throws ResourceNotFoundException {
+        List<OrderEntity> orders = orderRepo.findAll();
+
+        // create new array list for model of order
+        List<Order> modelOrders = new ArrayList<>();
+
+        if (orders == null) {
+            throw new ResourceNotFoundException("There are no orders yet");
+        }
+        //change all orders into toModel
+        for (OrderEntity order : orders) {
+            modelOrders.add(Order.toModel(order));
+        }
+        return modelOrders;
+    }
+
+    public  Order getOne_Order(Long id) throws ResourceNotFoundException {
+        OrderEntity order = orderRepo.getOne(id);
+        
+        //cast entity into model order type
+        Order modelOrder = Order.toModel(order);
+        
+        
+        
+        return modelOrder;
     }
 }
