@@ -183,14 +183,37 @@ public class OrderService {
         return modelOrders;
     }
 
-    public  Order getOne_Order(Long id) throws ResourceNotFoundException {
+    public Order getOne_Order(Long id) throws ResourceNotFoundException {
         OrderEntity order = orderRepo.getOne(id);
-        
+
         //cast entity into model order type
         Order modelOrder = Order.toModel(order);
-        
-        
-        
+
         return modelOrder;
+    }
+
+    public Order deleteOrder(Long id) throws ResourceNotFoundException {
+        if (!orderRepo.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("There's no order with ID: " + id);
+        }
+        // Find a order entity with the id
+        OrderEntity order = orderRepo.findById(id).get();
+        orderRepo.deleteById(id);
+
+        return Order.toModel(order);
+    }
+
+    public OrderEntity updateOrder(OrderEntity order, Long id) throws ResourceNotFoundException {
+        if (!orderRepo.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("There's no order with ID: " + id);
+        }
+        // Find a order entity with the id
+        OrderEntity orderUpdate = orderRepo.findById(id).get();
+        orderUpdate.setTotalPrice(order.getTotalPrice());
+
+        orderUpdate.setOrderDetails(order.getOrderDetails());
+
+        // save(update) the object into DB
+        return orderRepo.save(orderUpdate);
     }
 }

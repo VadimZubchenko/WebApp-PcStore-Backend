@@ -91,7 +91,7 @@ public class CustomerController {
             customerService.deleteUser(id);
             return ResponseEntity.ok("The customer with id " + id + " has been deleted");
         } catch (ResourceNotFoundException e) {
-            // return exception message if there's no customer with id∫
+            // return exception message if there's no customer with the id
             return ResponseEntity.badRequest().body(e.getMessage());
 
         } catch (Exception e) {
