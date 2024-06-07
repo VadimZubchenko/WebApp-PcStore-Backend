@@ -79,10 +79,10 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity updateOrder(@RequestBody OrderEntity order, @PathVariable Long id) {
+    @PutMapping
+    public ResponseEntity updateOrder(@RequestBody OrderEntity order) {
         try {
-            orderService.updateOrder(order, id);
+            orderService.updateOrder(order);
             return ResponseEntity.ok("Order has been updated");
 
         } catch (Exception e) {

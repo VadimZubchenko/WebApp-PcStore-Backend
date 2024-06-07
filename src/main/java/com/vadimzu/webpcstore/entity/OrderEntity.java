@@ -35,7 +35,7 @@ public class OrderEntity {
     @JoinColumn(name = "staff_id")
     private StaffEntity staff;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "order")
     private List<OrderDetailsEntity> orderDetails;
 
     public OrderEntity() {

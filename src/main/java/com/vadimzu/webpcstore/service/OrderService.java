@@ -203,17 +203,46 @@ public class OrderService {
         return Order.toModel(order);
     }
 
-    public OrderEntity updateOrder(OrderEntity order, Long id) throws ResourceNotFoundException {
-        if (!orderRepo.findById(id).isPresent()) {
-            throw new ResourceNotFoundException("There's no order with ID: " + id);
+    public Order updateOrder(OrderEntity orderUpdate) throws ResourceNotFoundException {
+        if (!orderRepo.findById(orderUpdate.getOrderID()).isPresent()) {
+            throw new ResourceNotFoundException("There's no order with ID: " + orderUpdate.getOrderID());
         }
-        // Find a order entity with the id
-        OrderEntity orderUpdate = orderRepo.findById(id).get();
-        orderUpdate.setTotalPrice(order.getTotalPrice());
+        // Find an order with the id in the DB
+        OrderEntity order = orderRepo.findById(orderUpdate.getOrderID()).get();
 
-        orderUpdate.setOrderDetails(order.getOrderDetails());
+        // create part list before updating
+        List<OrderDetailsEntity> partsBefore = order.getOrderDetails();
+        // list after updating
+        List<OrderDetailsEntity> partsAfter = orderUpdate.getOrderDetails();
 
-        // save(update) the object into DB
-        return orderRepo.save(orderUpdate);
+        // print part list before updating
+        System.out.print("parts before updating : \n");
+        // Find out a removable row ID of the order 
+        for (OrderDetailsEntity partBefore : partsBefore) {
+            System.out.println(partBefore.getOrderDetailID());
+
+            boolean nonMatch = partsAfter.stream()
+                    .noneMatch(partAfter -> partAfter.getOrderDetailID()
+                    .equals(partBefore.getOrderDetailID()));
+            if (nonMatch) {
+                System.out.println("removable part ID: " + partBefore.getOrderDetailID());
+                //find removable row in the DB
+                OrderDetailsEntity rmvRow = orderDetailsRepo.findById(partBefore.getOrderDetailID()).get();
+                //remove the row relation with the order
+                rmvRow.setOrder(null);
+                //delete the revovable row from the DB
+                orderDetailsRepo.deleteById(partBefore.getOrderDetailID());
+
+            }
+        }
+        
+        Double updatedTotalPrice = orderUpdate.getTotalPrice();
+        // set and save update total price
+        order.setTotalPrice(updatedTotalPrice);
+        order.setOrderDetails(partsAfter);
+        orderRepo.save(order);
+
+        return Order.toModel(order);
+
     }
 }
