@@ -149,7 +149,7 @@ public class OrderService {
                     }
                 }
                 orderDetails.setOrder(order);
-                //decrease quantity of part
+                //decrease quantity of part after ordering
                 if (orderDetails.getPart() != null) {
                     PartEntity part = partRepo.findByPartID(orderDetails.getPart().getPartID());
                     part.setStockQuantity(part.getStockQuantity() - orderDetails.getOrderDetailQuantity());
@@ -215,32 +215,40 @@ public class OrderService {
         // list after updating
         List<OrderDetailsEntity> partsAfter = orderUpdate.getOrderDetails();
 
-        // print part list before updating
-        System.out.print("parts before updating : \n");
         // Find out a removable row ID of the order 
         for (OrderDetailsEntity partBefore : partsBefore) {
-            System.out.println(partBefore.getOrderDetailID());
+            System.out.println("parts before: " + partBefore.getOrderDetailID());
 
             boolean nonMatch = partsAfter.stream()
                     .noneMatch(partAfter -> partAfter.getOrderDetailID()
                     .equals(partBefore.getOrderDetailID()));
             if (nonMatch) {
-                System.out.println("removable part ID: " + partBefore.getOrderDetailID());
-                //find removable row in the DB
-                OrderDetailsEntity rmvRow = orderDetailsRepo.findById(partBefore.getOrderDetailID()).get();
-                //remove the row relation with the order
-                rmvRow.setOrder(null);
+
                 //delete the revovable row from the DB
                 orderDetailsRepo.deleteById(partBefore.getOrderDetailID());
+                
+                //restore the quantity of part in removable row
+                PartEntity part = partRepo.findByPartID(partBefore.getPart().getPartID());
+                part.setStockQuantity(part.getStockQuantity() + partBefore.getOrderDetailQuantity());
+                partRepo.save(part);
 
             }
         }
-        
-        Double updatedTotalPrice = orderUpdate.getTotalPrice();
-        // set and save update total price
-        order.setTotalPrice(updatedTotalPrice);
-        order.setOrderDetails(partsAfter);
-        orderRepo.save(order);
+        if (partsAfter.size() > 0) {
+            // get new updated totalPrice after deleting the part
+            Double updatedTotalPrice = orderUpdate.getTotalPrice();
+            // update the totalPrice
+            order.setTotalPrice(updatedTotalPrice);
+            // update order with new one list of parts 
+            order.setOrderDetails(partsAfter);
+            orderRepo.save(order);
+        } else {
+            //delete empty order
+            order.setOrderDetails(partsAfter);
+            orderRepo.save(order);
+            orderRepo.deleteById(order.getOrderID());
+
+        }
 
         return Order.toModel(order);
 

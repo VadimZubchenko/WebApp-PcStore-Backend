@@ -27,14 +27,14 @@ public class OrderEntity {
     private Double totalPrice;
     private String description;
 
-    @ManyToOne
+    @ManyToOne 
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
     @ManyToOne
     @JoinColumn(name = "staff_id")
     private StaffEntity staff;
-
+    // REMOVE removes all parts(in order_details table) associated with the order 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "order")
     private List<OrderDetailsEntity> orderDetails;
 

@@ -38,8 +38,8 @@ public class OrderDetailsEntity {
     @ManyToOne (cascade=CascadeType.DETACH)
     @JoinColumn(name = "part_id")
     private PartEntity part;
-
-    @ManyToOne (cascade=CascadeType.REMOVE)
+    // DETACH removes association with the order, when part is deleted 
+    @ManyToOne (cascade=CascadeType.DETACH)
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
