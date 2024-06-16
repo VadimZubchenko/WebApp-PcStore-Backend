@@ -222,12 +222,14 @@ public class OrderService {
             boolean nonMatch = partsAfter.stream()
                     .noneMatch(partAfter -> partAfter.getOrderDetailID()
                     .equals(partBefore.getOrderDetailID()));
+
+            // TO DO find which row is updatable 
             if (nonMatch) {
 
                 //delete the revovable row from the DB
                 orderDetailsRepo.deleteById(partBefore.getOrderDetailID());
-                
-                //restore the quantity of part in removable row
+
+                //restore the part stock quantity after removing ordered part
                 PartEntity part = partRepo.findByPartID(partBefore.getPart().getPartID());
                 part.setStockQuantity(part.getStockQuantity() + partBefore.getOrderDetailQuantity());
                 partRepo.save(part);
@@ -235,6 +237,19 @@ public class OrderService {
             }
         }
         if (partsAfter.size() > 0) {
+            for (OrderDetailsEntity partAfter : partsBefore) {
+                for (OrderDetailsEntity updatePart : partsAfter) {
+                    if (partAfter.getOrderDetailID().equals(updatePart.getOrderDetailID())
+                            && !partAfter.getOrderDetailQuantity().equals(updatePart.getOrderDetailQuantity())) {
+                        //update quantity and price
+                        System.out.println("we've found a updatable row: " + updatePart.getOrderDetailID());
+                        partAfter.setOrderDetailQuantity(updatePart.getOrderDetailQuantity());
+                        partAfter.setOrderDetailPrice(updatePart.getOrderDetailPrice());
+                        System.out.println("Part quantity: " + updatePart.getOrderDetailQuantity() + " new price: " + updatePart.getOrderDetailPrice());
+                    }
+                }
+            }
+
             // get new updated totalPrice after deleting the part
             Double updatedTotalPrice = orderUpdate.getTotalPrice();
             // update the totalPrice
@@ -253,4 +268,5 @@ public class OrderService {
         return Order.toModel(order);
 
     }
+
 }

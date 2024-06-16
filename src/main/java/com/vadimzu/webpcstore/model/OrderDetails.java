@@ -15,7 +15,7 @@ public class OrderDetails {
 
     private Long orderDetailID;
     private Long orderDetailQuantity;
-    private Double orderDetailsPrice;
+    private Double orderDetailPrice;
     private PartEntity part;
     private String partName;
 
@@ -38,12 +38,12 @@ public class OrderDetails {
         this.orderDetailQuantity = orderDetailQuantity;
     }
 
-    public Double getOrderDetailsPrice() {
-        return orderDetailsPrice;
+    public Double getOrderDetailPrice() {
+        return orderDetailPrice;
     }
 
-    public void setOrderDetailsPrice(Double orderDetailsPrice) {
-        this.orderDetailsPrice = orderDetailsPrice;
+    public void setOrderDetailPrice(Double orderDetailPrice) {
+        this.orderDetailPrice = orderDetailPrice;
     }
 
     public String getPartName() {
@@ -59,7 +59,7 @@ public class OrderDetails {
 
         model.setOrderDetailID(orderDetailsEntity.getOrderDetailID());
         model.setOrderDetailQuantity(orderDetailsEntity.getOrderDetailQuantity());
-        model.setOrderDetailsPrice(orderDetailsEntity.getOrderDetailPrice());
+        model.setOrderDetailPrice(orderDetailsEntity.getOrderDetailPrice());
         model.setPartName(orderDetailsEntity.getPart().getPartName());
 
         return model;
