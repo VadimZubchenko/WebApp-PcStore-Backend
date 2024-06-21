@@ -8,7 +8,41 @@
 ![image](https://github.com/VadimZubchenko/WebApp-PcStore-Backend/assets/36922064/8ac9ffbe-dfb3-4fac-9448-ab67142491e7)
 
 
-This project is designed to facilitate easy management of inventory for PC stores. It consists of a backend and a frontend, utilizing modern web technologies to provide a seamless user experience.
+## What is it about
+
+The web application is a warehouse management tool for a computer parts store. This would be good for store's internal use to monitor sales, inventory, customer orders, and financial progress.
+
+First of all, the one of the key objectives of this project is to help Jr. Full-Stack Web developers practically implement their skills and knowledge in the Spring Boot + React stack. It provides a clear and understandable picture of the process of creating modern Single Page Applications (SPAs).
+
+## User Roles and User Interface
+
+* Sales Staff: Interface for creating customer orders from available parts and computer packages.
+* Warehouse Staff: Interface for managing inventory, including adding and removing products.
+* Managers: Interface for monitoring the company's financial status.
+* Administrators: Full access to all user interfaces.
+
+## Application Structure and Pages
+
+* __Make Order__ page: Sales staff can create customer orders from available parts and packages.
+* __Add Parts__ page: Warehouse staff can manage inventory, adding or removing products.
+* __Orders Details__ page: All employees can view and edit created orders
+* __Customers__ page: Manager can view and edit data of registered customers.
+
+
+## Current Progress
+
+* Most of the graphical user interface (GUI) is created.
+* About 90% of the functionality is implemented.
+* Database tables are set up and connection via Hibernate is established.
+* Application starts with a login page; staff can make authorization and log in with their credentials.
+* Sales page allows the saler to retrieve available computer parts from the database and create order lines.
+* Order page allows the saler to view and edit orders.
+* Inventory page allows the saler to add parts into the database.
+
+## Next Steps
+
+* Implement the Finance page for displaying financial progress of sales.
+* Implement comprehensive testing.
 
 ## Technologies and Tools
 
