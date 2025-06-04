@@ -23,7 +23,7 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
         
-        <!--Spring with Embedded Web Server Tomcat-->
+        <!--Spring Boot with Embedded Web Server Tomcat-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

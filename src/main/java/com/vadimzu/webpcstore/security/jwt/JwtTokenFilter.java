@@ -35,10 +35,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             @NotNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        // Fetch token, if it exist, from request via JwtService
+        // Fetch token, if it exists, from request via JwtService
         final String jwt = jwtService.resolveToken((HttpServletRequest) request);
-        // if there's no a token in the request, then contunue filterChain
-        // for authoritizatioin User and creating the token for him
+        // if there's no a token in the request, then continue filterChain
+        // for authorization User and creating the token for him
         if (jwt == null) {
             //if there's no token yet
             //switch to StaffController.login() for auth login/pass and token creating 
@@ -48,7 +48,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         // Extract login from the token
         final String staffLogin = jwtService.extractLogin(jwt);
 
-        // Check if staffLogin exctracted from token successfully and the staff isn't authenticated yet in S.Holder before. 
+        // Check if staffLogin extracted from token successfully and the staff isn't authenticated yet in S.Holder before.
         // S.C.Holder == null means the client-side didn't connect yet and to be added into S.Holder
         if (staffLogin != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
@@ -68,7 +68,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
-                // settin authToken into SECURITY HOLDER to giving permistion for this request 
+                // set authToken into SECURITY HOLDER to giving permission for this request
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
