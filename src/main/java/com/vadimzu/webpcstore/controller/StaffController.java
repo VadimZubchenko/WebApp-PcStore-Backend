@@ -12,7 +12,9 @@ import com.vadimzu.webpcstore.security.dtos.JwtRequest;
 import com.vadimzu.webpcstore.security.dtos.RegistrationStaffDto;
 import com.vadimzu.webpcstore.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,7 +56,11 @@ public class StaffController {
 
         try {
             return ResponseEntity.ok(staffService.login(authRequest));
-        } catch (ResourceNotFoundException e) {
+        }
+        catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login or password");
+        }
+        catch (ResourceNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Request didn't pass throw");
