@@ -1,6 +1,8 @@
 # Stage 1: Build the project using Maven and JDK 8
 FROM maven:3.8.6-openjdk-8 AS build
 
+LABEL maintainer="vadim.zubchenko@outlook.com"
+
 # Set working directory inside the container
 WORKDIR /app
 
