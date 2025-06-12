@@ -17,14 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.vadimzu.webpcstore.repository.CustomerRepo;
 import com.vadimzu.webpcstore.repository.OrderDetailsRepo;
 import com.vadimzu.webpcstore.repository.PartRepo;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 /**
- *
  * @author vadimzubchenko
  */
 @Service
@@ -55,10 +56,10 @@ public class OrderService {
 
         for (Object o : list) {
             if (o instanceof Map) {
-                Map< String, Object> map = (Map< String, Object>) o;
+                Map<String, Object> map = (Map<String, Object>) o;
                 System.out.println("Inside list: " + map + " size :" + map.size());
                 int i = 0;
-                for (Map.Entry< String, Object> entry : map.entrySet()) {
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
                     if (entry.getKey().equals("customerName")) {
                         customer.setCustomerName((String) entry.getValue());
                     }
@@ -84,21 +85,44 @@ public class OrderService {
         //find staff from repo by id   
         StaffEntity staff = staffRepo.findByLogin(staffName);
 
-        //extract totalPrice from the body
-        Double price = (Double) body.get("totalPrice");
-        Double totalPrice = new Double(price);
+        //extract totalPriceOne from the body
+        Object totalPrice = body.get("totalPrice");
+        System.out.println("Type of totalPrice value: " + totalPrice.getClass().getSimpleName());
 
-        // Creat new order and insert all related data in
+        Double totalPriceOne = null;
+        // convert to Double depending which value type came from frontEnd
+        if (totalPrice instanceof Integer) {
+            // Convert Integer to Double
+            totalPriceOne = ((Integer) totalPrice).doubleValue();
+        } else if (totalPrice instanceof Double) {
+            totalPriceOne = (Double) totalPrice;
+        } else if (totalPrice instanceof Number) {
+            // For other Number types like Long, Float, etc.
+            totalPriceOne = ((Number) totalPrice).doubleValue();
+        } else {
+            System.out.println("Unsupported type for partPrice: " + totalPrice.getClass().getName());
+        }
+
+
+        // Create new order and insert all related data in
         OrderEntity order = new OrderEntity();
 
         //set the time into order object     
         order.setOrderDate(orderDate);
-        //relate the order with customer              
+
+        //relate the order with customer
         order.setCustomer(customer);
-        //relate the order with staff        
+
+        //relate the order with staff
         order.setStaff(staff);
-        //set the totalPrice into the order
-        order.setTotalPrice(totalPrice);
+
+        //set the totalPriceOne into the order
+        if (totalPriceOne != null) {
+            order.setTotalPrice(totalPriceOne);
+            System.out.println("Set Price: " + totalPriceOne);
+        } else {
+            System.out.println("Total price is missing");
+        }
 
         // II.Save order in DB
         orderRepo.save(order);
@@ -122,10 +146,10 @@ public class OrderService {
                 System.out.println("\nNew OrderDetail line been created");
 
                 if (details instanceof Map) {
-                    Map< String, Object> map = (Map< String, Object>) details;
+                    Map<String, Object> map = (Map<String, Object>) details;
                     System.out.println("Inside details: " + map + " size " + map.size());
 
-                    for (Map.Entry< String, Object> entry : map.entrySet()) {
+                    for (Map.Entry<String, Object> entry : map.entrySet()) {
                         if (entry.getKey().equals("partID")) {
                             Integer id = (Integer) entry.getValue();
                             Long id2 = new Long(id);
@@ -140,10 +164,27 @@ public class OrderService {
                             System.out.println("Set quantity: " + entry.getValue());
                         }
                         if (entry.getKey().equals("partPrice")) {
-                            Double priceOne = (Double) entry.getValue();
-                            Double priceDouble = new Double(priceOne);
-                            orderDetails.setOrderDetailPrice(priceDouble);
-                            System.out.println("Set Price: " + entry.getValue());
+                            Object partPrice = entry.getValue();
+                            System.out.println("Type of partPrice: " + partPrice.getClass().getSimpleName());
+
+                            Double priceOne = null;
+
+                            if (partPrice instanceof Integer) {
+                                // Convert Integer to Double
+                                priceOne = ((Integer) partPrice).doubleValue();
+                            } else if (partPrice instanceof Double) {
+                                priceOne = (Double) partPrice;
+                            } else if (partPrice instanceof Number) {
+                                // For other Number types like Long, Float, etc.
+                                priceOne = ((Number) partPrice).doubleValue();
+                            } else {
+                                System.out.println("Unsupported type for partPrice: " + partPrice.getClass().getName());
+                            }
+
+                            if (priceOne != null) {
+                                orderDetails.setOrderDetailPrice(priceOne);
+                                System.out.println("Set Price: " + priceOne);
+                            }
                         }
 
                     }
@@ -221,7 +262,7 @@ public class OrderService {
 
             boolean nonMatch = partsAfter.stream()
                     .noneMatch(partAfter -> partAfter.getOrderDetailID()
-                    .equals(partBefore.getOrderDetailID()));
+                            .equals(partBefore.getOrderDetailID()));
 
             // TO DO find which row is updatable 
             if (nonMatch) {
@@ -250,9 +291,9 @@ public class OrderService {
                 }
             }
 
-            // get new updated totalPrice after deleting the part
+            // get new updated totalPriceOne after deleting the part
             Double updatedTotalPrice = orderUpdate.getTotalPrice();
-            // update the totalPrice
+            // update the totalPriceOne
             order.setTotalPrice(updatedTotalPrice);
             // update order with new one list of parts 
             order.setOrderDetails(partsAfter);

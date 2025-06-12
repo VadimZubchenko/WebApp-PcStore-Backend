@@ -34,7 +34,7 @@ public class OrderDetailControl {
             // return exception message if there's no order with the id
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Request didn't pass throw");
+            return ResponseEntity.badRequest().body("Request didn't pass throw " + e.getMessage());
         }
     }
     

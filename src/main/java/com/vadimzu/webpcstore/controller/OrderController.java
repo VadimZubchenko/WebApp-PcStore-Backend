@@ -33,7 +33,7 @@ public class OrderController {
             return ResponseEntity.status(201).body("Order has been created");
 
         } catch (Exception e) {
-            return ResponseEntity.ok("Request didn't pass throw");
+            return ResponseEntity.ok("Request didn't pass throw " + e.getMessage());
         }
 
     }
