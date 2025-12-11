@@ -5,7 +5,7 @@ services:
     container_name: mysql
     environment:
       MYSQL_DATABASE: pcstore
-      MYSQL_ROOT_PASSWORD: Nadym1971
+      MYSQL_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
@@ -19,9 +19,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pcstore?zeroDateTimeBehavior=convertToNull
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: Nadym1971
+      SPRING_DATASOURCE_URL: ${MYSQL_ROOT_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     command: >
       sh -c "
         until nc -z mysql 3306; do
