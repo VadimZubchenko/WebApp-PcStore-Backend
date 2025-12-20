@@ -45,6 +45,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                // 🔓 FRONTEND (SPA)
+                .antMatchers(
+                        "/",
+                        "/index.html",
+                        "/favicon.ico",
+                        "/assets/**",
+                        "/static/**",
+                        "/css/**",
+                        "/js/**"
+                ).permitAll()
+                // 🔓 AUTH ENDPOINTS
                 .antMatchers("/test","/login", "/registration").permitAll()
                 .antMatchers(HttpMethod.POST, "/customers").hasAuthority("admin")
                 .antMatchers(HttpMethod.DELETE, "/customers").hasAuthority("admin")

@@ -1,35 +1,13 @@
 version: '3.8'
-services:
-  mysql:
-    image: mysql:8
-    container_name: mysql
-    environment:
-      MYSQL_DATABASE: pcstore
-      MYSQL_ROOT_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
 
+services:
   app:
     build: .
-    container_name: springboot_app
-    depends_on:
-      - mysql
+    container_name: web-pcstore-backend
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: ${MYSQL_ROOT_URL}
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-    command: >
-      sh -c "
-        until nc -z mysql 3306; do
-          echo 'Waiting for MySQL...';
-          sleep 3;
-        done;
-        java -jar /app/app.jar
-      "
-
-volumes:
-  mysql_data:
+    entrypoint: ["java", "-jar", "/app/app.jar"]
