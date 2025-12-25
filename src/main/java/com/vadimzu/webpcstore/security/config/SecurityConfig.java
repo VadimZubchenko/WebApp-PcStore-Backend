@@ -21,6 +21,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 /**
  *
@@ -43,9 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors()
+                .and()
                 .csrf().disable()
                 .authorizeRequests()
-                // 🔓 FRONTEND (SPA)
+                // FRONTEND (SPA)
                 .antMatchers(
                         "/",
                         "/index.html",
@@ -55,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/css/**",
                         "/js/**"
                 ).permitAll()
-                // 🔓 AUTH ENDPOINTS
+                // AUTH ENDPOINTS
                 .antMatchers("/test","/login", "/registration").permitAll()
                 .antMatchers(HttpMethod.POST, "/customers").hasAuthority("admin")
                 .antMatchers(HttpMethod.DELETE, "/customers").hasAuthority("admin")
@@ -82,6 +87,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowCredentials(true);
+
+        // ✅ Azure + local (safe)
+        config.addAllowedOrigin("https://web-pcstore-e4b6crcybjh4ejbg.swedencentral-01.azurewebsites.net");
+        config.addAllowedOrigin("http://localhost:8080");
+
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
 }
