@@ -89,13 +89,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(12);
     }
 
+    // Add a global CORS configuration bean
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
 
-        // ✅ Azure + local (safe)
+        // Azure + local (safe)
         config.addAllowedOrigin("https://web-pcstore-e4b6crcybjh4ejbg.swedencentral-01.azurewebsites.net");
         config.addAllowedOrigin("http://localhost:8080");
 
