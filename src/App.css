@@ -1,0 +1,205 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(20px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: grey;
+  color: white;
+  text-align: center;
+}
+
+.table {
+  border-collapse: collapse;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.scrollable-table {
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.scrollable-table > .table {
+  width: 100%;
+}
+
+.table th {
+  position: sticky;
+  border-bottom: 2px, solid;
+  top: 0px;
+  background-color: lightgray;
+  padding: auto;
+}
+
+.table tr {
+  scroll-snap-align: start;
+  border: 0px;
+  border-bottom: 2px;
+}
+
+.clickable-row {
+  cursor: pointer;
+  height: 40px;
+}
+
+.clickable-row:hover {
+  background-color: rgb(231, 239, 238);
+}
+
+.quantity-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 3px;
+
+  &:focus {
+    background: red;
+  }
+}
+
+.quantity-input__modifier,
+.quantity-input__screen {
+  user-select: none;
+  outline: none;
+}
+
+.quantity-input__modifier {
+  padding: 0.5rem;
+  width: 7rem;
+  font-size: 1.5rem;
+
+  background: #f3f3f3;
+  color: #000000;
+  border: 0 solid #dbdbdb;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(#fff, 0.6);
+
+  cursor: pointer;
+
+  &:hover {
+    background: grey;
+    color: #fdfbfb;
+  }
+
+  &--left {
+    border-radius: 3px 0 0 3px;
+  }
+
+  &--right {
+    border-radius: 3px 0 0 3px;
+  }
+}
+
+.quantity-input__screen {
+  width: 7rem;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+
+  border: 0;
+  border-top: 0 solid #dbdbdb;
+  border-bottom: 0 solid #dbdbdb;
+  text-align: center;
+}
+
+.grey-background {
+  width: flex;
+  height: flex;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+
+  background: #e2e1e0;
+  color: #333;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+.partsZone {
+  width: 40%;
+  height: 700px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.orderZone {
+  width: 60%;
+  height: auto;
+  position: absolute;
+  top: 150px;
+  right: 50px;
+}
+.selector {
+  width: 30%;
+  height: auto;
+  top: 10%;
+  left: 10%;
+}
+.orderTable {
+  width: 50%;
+  height: auto;
+  /* border: 5px solid #2f29cb; */
+  position: absolute;
+  top: 10%;
+  left: 40%;
+}
+.partTable,
+.customerForm {
+  width: 30%;
+  height: auto;
+  /* border: 5px solid #2f29cb; */
+  position: relative;
+  top: 100px;
+  left: 15%;
+}
+.border-blue {
+  border: 5px solid #2f29cb;
+}
+
+.card-box {
+  width: 95%;
+  border-radius: 2%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
