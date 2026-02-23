@@ -1,8 +1,3 @@
-
----
-*The project is under development...*
----
-
 # Easy Inventory Management
 
 ![image](https://github.com/VadimZubchenko/WebApp-PcStore-Backend/assets/36922064/8ac9ffbe-dfb3-4fac-9448-ab67142491e7)
@@ -56,11 +51,6 @@ First of all, the one of the key objectives of this project is to help Jr. Full-
 - **Node.js**: A JavaScript runtime for executing server-side code.
 - **React**: A JavaScript library for building user interfaces.
 - **Redux**: A state management library for JavaScript applications.
-
-## Repository Links
-
-- **Backend Repository**: [WebApp-PcStore-Backend](https://github.com/VadimZubchenko/WebApp-PcStore-Backend.git)
-- **Frontend Repository**: [WebApp-PcStore-Frontend](https://github.com/VadimZubchenko/WebApp-PcStore-Frontend.git)
 
 ## Prerequisites
 
