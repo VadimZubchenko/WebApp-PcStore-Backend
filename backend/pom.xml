@@ -120,7 +120,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- frontend-maven-plugin в backend/pom.xml -->
+            <!-- frontend-maven-plugin in backend/pom.xml -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
@@ -182,7 +182,7 @@
 
                         <configuration>
                             <outputDirectory>
-                                src/main/resources/static
+                                ${project.build.outputDirectory}/static
                             </outputDirectory>
 
                             <resources>
