@@ -12,8 +12,9 @@ target/
 # --------------------
 # Frontend (Node / React)
 # --------------------
-node_modules/
-build/
+frontend/node_modules/
+frontend/build/
+frontend/node/
 dist/
 npm-debug.log*
 yarn-debug.log*
@@ -22,7 +23,8 @@ yarn-error.log*
 # --------------------
 # IDEs
 # --------------------
-.idea/
+.idea
+frontend/.idea/
 .vscode/
 .settings/
 .classpath
