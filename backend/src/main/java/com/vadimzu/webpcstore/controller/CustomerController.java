@@ -10,14 +10,7 @@ import com.vadimzu.webpcstore.exception.ResourceNotFoundException;
 import com.vadimzu.webpcstore.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -25,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-//@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
     // get all customer
-    @GetMapping("/customers")
+    @GetMapping
     public ResponseEntity getAllCustomers() {
         try {
             return ResponseEntity.ok(customerService.getAll());
@@ -45,7 +38,7 @@ public class CustomerController {
     }
 
     //Creating new customer and saving recieved from client entity to repository
-    @PostMapping("/customers")
+    @PostMapping
     public ResponseEntity registration(@RequestBody CustomerEntity customer) {
         try {
             // delegate saving entity to customerService
@@ -59,7 +52,7 @@ public class CustomerController {
         }
 
     }
-    @PutMapping("/customers/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity updateUser(@RequestBody CustomerEntity customer, @PathVariable Long id){
     
         try {
@@ -71,7 +64,7 @@ public class CustomerController {
     }
 
     // Single customer
-    @GetMapping("/customers/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity getOneUser(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(customerService.getOne(id));
@@ -85,7 +78,7 @@ public class CustomerController {
     }
     
 
-    @DeleteMapping("/customers/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         try {
             customerService.deleteUser(id);

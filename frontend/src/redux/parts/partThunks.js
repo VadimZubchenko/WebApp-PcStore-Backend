@@ -20,7 +20,7 @@ export const getPartList = (token) => async (dispatch) => {
   }
 
   dispatch(loading())
-  const response = await fetch('/parts', request)
+  const response = await fetch('/api/parts', request)
   dispatch(stopLoading())
 
   if (!response) {
@@ -55,7 +55,7 @@ export const addPart = (part, token) => async (dispatch) => {
   }
 
   dispatch(loading())
-  const response = await fetch('/parts', request)
+  const response = await fetch('/api/parts', request)
   dispatch(stopLoading())
 
   if (!response) {

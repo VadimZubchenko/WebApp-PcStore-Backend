@@ -25,7 +25,7 @@ export const getCustomersList = (token) => {
       headers: { 'Content-type': 'application/json', token: token },
     }
     dispatch(loading())
-    let response = await fetch('/customers', request)
+    let response = await fetch('/api/customers', request)
     dispatch(stopLoading())
     if (!response) {
       dispatch(
@@ -67,7 +67,7 @@ export const removeCustomer = (customerID, token) => {
       headers: { 'Content-type': 'application/json', token: token },
     }
     dispatch(loading())
-    let response = await fetch('/customers/' + customerID, request)
+    let response = await fetch('/api/customers/' + customerID, request)
     dispatch(stopLoading())
     if (!response) {
       dispatch(
@@ -108,7 +108,7 @@ export const editCustomer = (customer, token) => {
       body: JSON.stringify(customer),
     }
     dispatch(loading())
-    let response = await fetch('/customers/' + customer.customerID, request)
+    let response = await fetch('/api/customers/' + customer.customerID, request)
     dispatch(stopLoading())
     if (!response) {
       dispatch(

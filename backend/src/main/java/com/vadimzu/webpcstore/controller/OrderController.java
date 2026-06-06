@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @author vadimzubchenko
  */
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 
 public class OrderController {
 

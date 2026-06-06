@@ -27,7 +27,7 @@ export const getOrdersList = (token) => {
       headers: { 'Content-type': 'application/json', token: token },
     }
     dispatch(loading())
-    let response = await fetch('/orders', request)
+    let response = await fetch('/api/orders', request)
     dispatch(stopLoading())
     if (!response) {
       dispatch(
@@ -69,7 +69,7 @@ export const addOrder = (order, token) => {
       body: JSON.stringify(order),
     }
     dispatch(loading())
-    let response = await fetch('/orders', request)
+    let response = await fetch('/api/orders', request)
     dispatch(stopLoading())
     if (!response) {
       dispatch(
@@ -105,7 +105,7 @@ export const removeOrder = (orderID, token) => {
       headers: { 'Content-type': 'application/json', token: token },
     }
     dispatch(loading())
-    let response = await fetch('/orders/' + orderID, request)
+    let response = await fetch('/api/orders/' + orderID, request)
     dispatch(stopLoading())
     if (!response) {
       dispatch(
@@ -141,7 +141,7 @@ export const editOrder = (order, token) => {
       body: JSON.stringify(order),
     }
     dispatch(loading())
-    let response = await fetch('/orders', request)
+    let response = await fetch('/api/orders', request)
     dispatch(stopLoading())
     if (!response) {
       dispatch(

@@ -66,7 +66,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/customers").hasAuthority("admin")
                 .antMatchers(HttpMethod.DELETE, "/customers").hasAuthority("admin")
                 .antMatchers(HttpMethod.PUT, "/customers/").hasAuthority("admin")
-                .anyRequest().authenticated()
+                // all API endpoints require auth
+                .antMatchers("/api/**").authenticated()
+
+                // =========================
+                // EVERYTHING ELSE = SPA
+                // =========================
+                .anyRequest().permitAll()
+
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
