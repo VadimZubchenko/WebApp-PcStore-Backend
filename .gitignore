@@ -48,3 +48,8 @@ nb-configuration.xml
 *.iws
 *.iml
 *.ipr
+
+# --------------------
+# Database backups
+# --------------------
+*.sql
