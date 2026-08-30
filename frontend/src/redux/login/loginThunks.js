@@ -24,7 +24,7 @@ export const register = (user) => {
       body: JSON.stringify(user),
     }
     dispatch(loading())
-    let response = await fetch('/registration', request)
+    let response = await fetch('/api/registration', request)
     if (!response) {
       dispatch(
         registerFailed(
@@ -58,7 +58,7 @@ export const logAction = (user) => {
       body: JSON.stringify(user),
     }
     dispatch(loading())
-    let response = await fetch('/login', request)
+    let response = await fetch('/api/login', request)
     if (!response) {
       dispatch(loginFailed('There was an error the connection. Login failed!'))
     }
@@ -89,7 +89,7 @@ export const logout = (token) => {
       headers: { 'Content-type': 'application/json', token: token },
     }
     dispatch(loading())
-    let response = await fetch('/logout', request)
+    let response = await fetch('/api/logout', request)
     if (!response) {
       dispatch(
         logoutFailed('There was an error with the connection. Logging you out!')

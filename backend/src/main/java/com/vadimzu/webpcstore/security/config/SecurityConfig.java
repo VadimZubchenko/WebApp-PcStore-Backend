@@ -25,6 +25,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+
 /**
  *
  * @author vadimzubchenko
@@ -62,10 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/favicon.ico"
                 ).permitAll()
                 // AUTH ENDPOINTS
-                .antMatchers("/test","/login", "/registration").permitAll()
-                .antMatchers(HttpMethod.POST, "/customers").hasAuthority("admin")
-                .antMatchers(HttpMethod.DELETE, "/customers").hasAuthority("admin")
-                .antMatchers(HttpMethod.PUT, "/customers/").hasAuthority("admin")
+                .antMatchers("/test","/api/login", "/api/registration").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/customers").hasAuthority("admin")
+                .antMatchers(HttpMethod.DELETE, "/api/customers/**").hasAuthority("admin")
                 // all API endpoints require auth
                 .antMatchers("/api/**").authenticated()
 
@@ -81,9 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(jwtConfigurer)
                 .and()
                 .logout()
+                .logoutUrl("/api/logout")
                 .clearAuthentication(true)
-                .logoutSuccessUrl("/login")
-                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    SecurityContextHolder.clearContext();
+                });
     }
 
     @Bean

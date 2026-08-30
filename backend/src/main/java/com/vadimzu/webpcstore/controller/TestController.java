@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TestController {
     @GetMapping("/test")
     public String hello() {
-        return "App is running!";
+        return "Application is running!";
     }
 }
