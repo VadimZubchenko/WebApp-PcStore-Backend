@@ -58,3 +58,4 @@ services:
 
 volumes:
   mysql_data:
+    name: webapp-pcstore-backend_mysql_data
