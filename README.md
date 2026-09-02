@@ -133,58 +133,88 @@ docker compose \
   up -d --build
 ```
 
-## CI/CD structure 
+## 2CI/CD Pipeline — Feature to Production
 
-For app refactoring and Oracle deployment: 
+Pipeline
+
+```text
+feature → PR → dev → CI → PR → main → CI → CD → Oracl
+```
+Important distinction
+```text
+PR → CI       = verify changes before merge
+push → CI     = verify the updated branch
+push → CD     = deploy main to Oracle
+```
+
+### Scheme of CI/CD Workflow: Feature → Dev → Main → Oracle
 
 ```text
                     ┌──────────────┐
                     │    feature   │
                     └──────┬───────┘
                            │
-                           │ push
+                           │ push branch
                            ↓
                     ┌──────────────┐
-                    │     dev      │
+                    │    GitHub    │
                     └──────┬───────┘
                            │
-                           │ CI
+                           │ PR → dev
                            ↓
-                  ┌──────────────────┐
-                  │ CI на dev        │
-                  │                  │
-                  │ docker-build ✓   │
-                  │ test-ssh ✓       │
-                  └────────┬─────────┘
-                           │
-                           │ PR
-                           ↓
-                    ┌──────────────┐
-                    │     main     │
-                    └──────┬───────┘
-                           │
-                           │ CI
-                           ↓
-                  ┌──────────────────┐
-                  │ CI на main       │
-                  │                  │
-                  │ docker-build ✓   │
-                  │ test-ssh ✓       │
-                  └────────┬─────────┘
-                           │
-                           │ merge → push main
-                           ↓
-                  ┌──────────────────┐
-                  │       CD         │
-                  │                  │
-                  │ SSH → Oracle     │
-                  │ git pull main    │
-                  │ docker compose   │
-                  │ up -d --build    │
-                  └────────┬─────────┘
-                           │
-                           ↓
-                       Oracle
-                    application ✓
+                    ┌──────────────────┐
+                    │       dev        │
+                    └────────┬─────────┘
+                             │
+                             │ CI
+                             ↓
+                  ┌──────────────────────┐
+                  │ CI on dev            │
+                  │                      │
+                  │ docker-build ✓       │
+                  │ ├─ backend           │
+                  │ └─ frontend          │
+                  └──────────┬───────────┘
+                             │
+                             │ merge → dev
+                             ↓
+                    ┌──────────────────┐
+                    │       dev        │
+                    └────────┬─────────┘
+                             │
+                             │ PR → main
+                             ↓
+                    ┌──────────────────┐
+                    │       main       │
+                    └────────┬─────────┘
+                             │
+                             │ CI
+                             ↓
+                  ┌──────────────────────┐
+                  │ CI on main           │
+                  │                      │
+                  │ docker-build ✓       │
+                  │ ├─ backend           │
+                  │ └─ frontend          │
+                  └──────────┬───────────┘
+                             │
+                             │ merge → main
+                             ↓
+             ┌────────────────────────────────────────────────────────────┐
+             │                 CD                                         │  
+             │                                                            │  
+             │ SSH → Oracle                                               │    
+             │ git pull origin main                                       │  
+             │ docker compose -f docker-compose.oracle.yml up -d --build  │            
+             └──────────────────┬─────────────────────────────────────────┘
+                                │
+                                ↓
+                         ┌─────────────┐
+                         │   Oracle    │
+                         │             │
+                         │ Application │
+                         │      ✓      │
+                         └─────────────┘
 ```
+
 
