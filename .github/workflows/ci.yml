@@ -21,3 +21,18 @@ jobs:
 
       - name: Build frontend image
         run: docker build -t pcstore-frontend ./frontend
+
+  test-ssh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test SSH connection
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.ORACLE_HOST }}
+          username: ${{ secrets.ORACLE_USER }}
+          key: ${{ secrets.ORACLE_SSH_KEY }}
+          script: |
+            echo "SSH connection successful"
+            hostname
+            whoami
