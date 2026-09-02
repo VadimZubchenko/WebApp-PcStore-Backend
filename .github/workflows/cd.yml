@@ -17,8 +17,10 @@ jobs:
           username: ${{ secrets.ORACLE_USER }}
           key: ${{ secrets.ORACLE_SSH_KEY }}
           script: |
-            echo "SSH connection successful"
-            echo "Server:"
-            hostname
-            echo "User:"
-            whoami
+            cd ~/WebApp-PcStore-Backend
+            
+            echo "Current branch:"
+            git branch --show-current
+            
+            echo "Pulling main:"
+            git pull origin main
