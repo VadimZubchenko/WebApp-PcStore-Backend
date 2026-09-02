@@ -34,9 +34,7 @@ jobs:
           key: ${{ secrets.ORACLE_SSH_KEY }}
           script: |
             echo "SSH connection successful"
-            echo "Server:"
+            echo "Hostname:"
             hostname
             echo "User:"
             whoami
-            echo "Directory:"
-            pwd
