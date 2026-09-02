@@ -132,3 +132,59 @@ docker compose \
   -f docker-compose.oracle.yml \
   up -d --build
 ```
+
+## CI/CD structure 
+
+For app refactoring and Oracle deployment: 
+
+```text
+                    ┌──────────────┐
+                    │    feature   │
+                    └──────┬───────┘
+                           │
+                           │ push
+                           ↓
+                    ┌──────────────┐
+                    │     dev      │
+                    └──────┬───────┘
+                           │
+                           │ CI
+                           ↓
+                  ┌──────────────────┐
+                  │ CI на dev        │
+                  │                  │
+                  │ docker-build ✓   │
+                  │ test-ssh ✓       │
+                  └────────┬─────────┘
+                           │
+                           │ PR
+                           ↓
+                    ┌──────────────┐
+                    │     main     │
+                    └──────┬───────┘
+                           │
+                           │ CI
+                           ↓
+                  ┌──────────────────┐
+                  │ CI на main       │
+                  │                  │
+                  │ docker-build ✓   │
+                  │ test-ssh ✓       │
+                  └────────┬─────────┘
+                           │
+                           │ merge → push main
+                           ↓
+                  ┌──────────────────┐
+                  │       CD         │
+                  │                  │
+                  │ SSH → Oracle     │
+                  │ git pull main    │
+                  │ docker compose   │
+                  │ up -d --build    │
+                  └────────┬─────────┘
+                           │
+                           ↓
+                       Oracle
+                    application ✓
+```
+
