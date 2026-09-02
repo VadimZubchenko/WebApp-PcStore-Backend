@@ -24,3 +24,6 @@ jobs:
             
             echo "Pulling main:"
             git pull origin main
+            
+            echo "Rebuilding and restarting application:"
+            docker compose -f docker-compose.oracle.yml up -d --build
