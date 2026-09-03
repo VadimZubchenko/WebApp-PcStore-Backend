@@ -112,7 +112,7 @@ const LoginPage = () => {
   return (
     <Card style={{ width: 450 }} className="d-flex card-box p-4 mt-5">
       <h2>{state.isReg ? 'Registration' : 'Authorization'}</h2>
-      <div style={{ width: 400, backgroundColor: 'light-grey' }}>
+      <div style={{ backgroundColor: 'light-grey' }}>
         <Form className="d-flex flex-column">
           {state.isReg && (
             <label htmlFor="staffName" className="form-label mb-0 mt-3">
