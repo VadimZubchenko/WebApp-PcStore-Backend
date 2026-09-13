@@ -70,7 +70,7 @@ const Navbar = (props) => {
       <div className="container mx-auto p-0">
         <div className="row">
           <div className="col">
-            <p className="navbar-brand mt-3">PC Store</p>
+            <p className="navbar-brand mt-3">PCStore Manager– DEV</p>
 
             <button
               className="navbar-toggler"
