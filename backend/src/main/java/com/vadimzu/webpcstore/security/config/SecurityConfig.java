@@ -109,8 +109,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Azure + local (safe)
         config.addAllowedOrigin("https://web-pcstore-e4b6crcybjh4ejbg.swedencentral-01.azurewebsites.net");
         config.addAllowedOrigin("http://localhost:8080");
-        config.addAllowedOrigin("https://pcstore-manager.uk");
         config.addAllowedHeader("*");
+        config.addAllowedOrigin("https://dev.pcstore-manager.uk");
         config.addAllowedMethod("*");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
