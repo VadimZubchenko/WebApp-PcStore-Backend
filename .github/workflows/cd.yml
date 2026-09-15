@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   deploy:
@@ -17,13 +18,27 @@ jobs:
           username: ${{ secrets.ORACLE_USER }}
           key: ${{ secrets.ORACLE_SSH_KEY }}
           script: |
-            cd ~/WebApp-PcStore-Backend
-            
-            echo "Current branch:"
-            git branch --show-current
-            
-            echo "Pulling main:"
-            git pull origin main
-            
-            echo "Rebuilding and restarting application:"
-            docker compose -f docker-compose.oracle.yml up -d --build
+            if [ "${{ github.ref_name }}" = "main" ]; then
+              echo "Deploying production..."
+
+              cd ~/WebApp-PcStore-Backend
+
+              git pull --ff-only origin main
+
+              docker compose \
+                -f docker-compose.oracle.yml \
+                up -d --build
+
+            elif [ "${{ github.ref_name }}" = "dev" ]; then
+              echo "Deploying development..."
+
+              cd ~/WebApp-PcStore-Backend-dev
+
+              git pull --ff-only origin dev
+
+              docker compose \
+                -p pcstore-dev \
+                --env-file .env.dev \
+                -f docker-compose.oracle.yml \
+                up -d --build
+            fi 
