@@ -3,17 +3,17 @@
 ### Development
 
 ```text
-- [ ] Create or update the feature branch
-- [ ] Push the feature branch to GitHub
-- [ ] Create Pull Request: feature → dev
-- [ ] Wait for CI to pass
-- [ ] Merge into dev
-- [ ] CI runs on dev
-- [ ] CD connects to Oracle
-- [ ] git pull --ff-only origin dev
-- [ ] Build and start pcstore-dev
-- [ ] Check Development containers
-- [ ] Test https://dev.pcstore-manager.uk
+- Create or update the feature branch
+- Push the feature branch to GitHub
+- Create Pull Request: feature → dev
+- Wait for CI to pass
+- Merge into dev
+- CI runs on dev
+- CD connects to Oracle
+- git pull --ff-only origin dev
+- Build and start pcstore-dev
+- Check Development containers
+- Test https://dev.pcstore-manager.uk
 ```
 
 Development deployment:
@@ -59,16 +59,16 @@ Development ports:
 ### Production
 
 ```text
-- [ ] Verify Development is working
-- [ ] Create Pull Request: dev → main
-- [ ] Wait for CI to pass
-- [ ] Merge into main
-- [ ] CI runs on main
-- [ ] CD connects to Oracle
-- [ ] git pull --ff-only origin main
-- [ ] Build and start Production
-- [ ] Check Production containers
-- [ ] Test https://pcstore-manager.uk
+- Verify Development is working
+- Create Pull Request: dev → main
+- Wait for CI to pass
+- Merge into main
+- CI runs on main
+- CD connects to Oracle
+- git pull --ff-only origin main
+- Build and start Production
+- Check Production containers
+- Test https://pcstore-manager.uk
 ```
 
 Production deployment:
@@ -103,12 +103,12 @@ Production ports:
 ### If Database Data Must Be Updated
 
 ```text
-☐ Create the SQL dump
-☐ Copy the dump to Oracle
-☐ Verify the target database
-☐ Load the SQL dump into pcstore_dev
-☐ Verify the imported tables/data
-☐ Test the Development application
+- Create the SQL dump
+- Copy the dump to Oracle
+- Verify the target database
+- Load the SQL dump into pcstore_dev
+- Verify the imported tables/data
+- Test the Development application
 ```
 
 Example:
