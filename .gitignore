@@ -3,6 +3,7 @@
 # --------------------
 .env
 .DS_Store
+.env.dev
 
 # --------------------
 # Backend (Maven)
