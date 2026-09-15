@@ -110,6 +110,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedOrigin("https://web-pcstore-e4b6crcybjh4ejbg.swedencentral-01.azurewebsites.net");
         config.addAllowedOrigin("http://localhost:8080");
         config.addAllowedHeader("*");
+        config.addAllowedOrigin("https://pcstore-manager.uk");
         config.addAllowedOrigin("https://dev.pcstore-manager.uk");
         config.addAllowedMethod("*");
 
