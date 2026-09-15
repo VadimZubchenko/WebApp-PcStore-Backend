@@ -369,6 +369,12 @@ The Development `.env.dev` file on Oracle contains:
 NGINX_HTTP_PORT=8081
 NGINX_HTTPS_PORT=8443
 ```
+The Production `.env` file on Oracle contains:
+
+```env
+NGINX_HTTP_PORT=80
+NGINX_HTTPS_PORT=443
+```
 
 These values are used by `docker-compose.oracle.yml`:
 
