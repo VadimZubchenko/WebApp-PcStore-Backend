@@ -185,28 +185,52 @@ The application consists of separate Docker containers for:
 Production and Development run on the same Oracle VM, but they are completely isolated environments with separate containers, Compose projects, configuration, and databases.
 
 ```text
-                         Browser
-                            │
-               ┌────────────┴────────────┐
-               │                         │
-               ▼                         ▼
-        PRODUCTION                  DEVELOPMENT
-   pcstore-manager.uk          dev.pcstore-manager.uk
-               │                         │
-               ▼                         ▼
-            Nginx                     Nginx
-               │                         │
-        ┌──────┴──────┐          ┌──────┴──────┐
-        │             │          │             │
-        ▼             ▼          ▼             ▼
-    Frontend       Backend    Frontend       Backend
-    React/Nginx   Spring Boot  React/Nginx   Spring Boot
-                      │                         │
-                      ▼                         ▼
-                    MySQL                     MySQL
-                   pcstore                  pcstore_dev
+                              BROWSER
+                                 │
+                                 │ HTTPS :443
+                                 ▼
+                 ┌───────────────────────────────┐
+                 │        Production Nginx       │
+                 │ webapp-pcstore-backend-nginx-1│          ← Production Nginx
+                 │                               │            (External Reverse Proxy)
+                 │  pcstore-manager.uk           │
+                 │  dev.pcstore-manager.uk       │
+                 └──────────────┬────────────────┘
+                                │
+                  ┌─────────────┴─────────────┐
+                  │                           │
+                  ▼                           ▼
+           PRODUCTION                  DEVELOPMENT
+      pcstore-manager.uk          dev.pcstore-manager.uk
+                  │                           │                  
+          :8080   │ :80                       │
+          ┌───────┴───────┐           proxy_pass
+          │               │         http://dev-nginx:80     ← "dev-nginx" is a network alias
+          ▼               ▼                   │               for "pcstore-dev-nginx-1"
+      /api/*              /*                  ▼
+          │               │         ┌────────────────────┐
+          ▼               ▼         │    Dev Nginx       │
+      Backend          Frontend     │pcstore-dev-nginx-1 │  ← Development Nginx (Internal Reverse Proxy)
+    Spring Boot       React/Nginx   │                    │        
+          │                         └───────┬────────────┘          
+          │                           :8080 │ :80                   
+          ▼                         ┌───────┴───────┐               
+      MySQL                      /api/*             /*
+     pcstore                        │                │
+                                    ▼                ▼
+                                 Backend          Frontend
+                               Spring Boot       React/Nginx
+                                    │
+                                    ▼
+                                  MySQL
+                               pcstore_dev
 ```
+Dev Nginx is connected to the Production Docker network.
+This allows Production Nginx to reach Dev Nginx and forward
+requests for dev.pcstore-manager.uk using the "dev-nginx" alias.
 
+"dev-nginx" is a Docker DNS alias for "pcstore-dev-nginx-1".
+  
 Each environment has its own:
 
 * Nginx container
