@@ -16,10 +16,10 @@ PCStore Manager is a web-based warehouse management application designed for a c
 - Manage staff and user roles
 - Monitor sales and order information
 
-![img_7.png](img_7.png)
-![img_4.png](img_4.png)
-![img_3.png](img_3.png)
-![img_6.png](img_6.png)
+![img_7.png](docs/images/img_7.png)
+![img_4.png](docs/images/img_4.png)
+![img_3.png](docs/images/img_3.png)
+![img_6.png](docs/images/img_6.png)
 
 ## Getting Started
 
