@@ -227,8 +227,3 @@ SOURCE /tmp/dev.sql
             executes SQL from a file
 ```
 
----
-
-
-```mermaid
-...
