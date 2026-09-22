@@ -16,11 +16,14 @@ PCStore Manager is a web-based warehouse management application designed for a c
 - Manage staff and user roles
 - Monitor sales and order information
 
+---
+
 ![img_7.png](docs/images/img_7.png)
 ![img_4.png](docs/images/img_4.png)
 ![img_3.png](docs/images/img_3.png)
 ![img_6.png](docs/images/img_6.png)
 
+---
 ## Getting Started
 
 ### Access the Application
@@ -41,6 +44,7 @@ The application will be available at:
 
 http://localhost
 
+---
 ## Tech Stack
 
 The application is built with a React frontend, Spring Boot backend, and MySQL database. Docker is used to run the application components in isolated containers.
@@ -102,6 +106,8 @@ Production Nginx
 
 See the [Architecture Documentation](docs/architecture.md)
 for the detailed Docker network and Nginx configuration.
+
+---
 
 ## Project Structure
 
@@ -165,6 +171,7 @@ GitHub Actions connects to the Oracle VM and runs the corresponding Docker Compo
 See the [Deployment Documentation](docs/deployment.md)
 for detailed deployment commands, Docker configuration, database import, and troubleshooting.
 
+---
 # Database
 
 The application uses MySQL 8.0 for persistent data storage.
