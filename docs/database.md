@@ -1,4 +1,5 @@
 # Database
+
 ## Database Overview
 
 The application uses MySQL 8.0.

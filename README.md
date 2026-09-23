@@ -1,11 +1,18 @@
+# PCStore Manager
 
-
-## PCStore Manager
-
-# Overview
+## Overview
 PCStore Manager is a web-based warehouse management application designed for a computer parts store. It helps manage inventory, sales, customer orders, packages, and staff.
 
+## Table of Contents
 
+- [Overview](#overview)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Deployment](#deployment)
+- [Database](#database)
 ## Features
 
 - Manage customers and customer information
@@ -72,15 +79,13 @@ The application is built with a React frontend, Spring Boot backend, and MySQL d
 - GitHub Actions
 - Oracle Cloud VM
 
-### Architecture
+## Architecture
+
 - REST API
 - Dockerized services
 - Nginx reverse proxy
 - CI/CD with GitHub Actions
 - Separate Development and Production environments
-
-The application runs in separate Production and Development
-Docker environments.
 
 Production Nginx is the public entry point for both domains
 and forwards Development traffic to the Dev Nginx container.
@@ -98,10 +103,9 @@ Production Nginx
 │     └── MySQL
 │
 └── dev-nginx
-│
-├── Frontend
-├── Backend
-└── MySQL
+      ├── Frontend
+      ├── Backend
+      └── MySQL
 ```
 
 See the [Architecture Documentation](docs/architecture.md)
@@ -129,7 +133,6 @@ web-pcstore/
 │   └── nginx.local.conf
 │
 ├── docs/                     # Project documentation
-│   └── architecture.md
 │
 ├── .github/
 │   └── workflows/            # GitHub Actions CI/CD
@@ -172,7 +175,7 @@ See the [Deployment Documentation](docs/deployment.md)
 for detailed deployment commands, Docker configuration, database import, and troubleshooting.
 
 ---
-# Database
+## Database
 
 The application uses MySQL 8.0 for persistent data storage.
 
@@ -191,5 +194,5 @@ Production:  pcstore
 Development: pcstore_dev
 ```
 
-See the [Database Schema and UML Diagramdocs](docs/database.md)
+See the [Database Documentation](docs/database.md)
 
