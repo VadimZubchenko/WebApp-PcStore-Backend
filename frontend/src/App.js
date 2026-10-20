@@ -15,7 +15,7 @@ function App() {
   const isLogged = useSelector((state) => state.login.isLogged)
   const loading = useSelector((state) => state.login.loading)
   const error = useSelector(
-    (state) => state.shopping.error || state.login.error
+    (state) => state.shopping.error || state.login.error,
   )
 
   // Helper function to display messages (loading or errors)
@@ -54,7 +54,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     ),
-    [isLogged]
+    [isLogged],
   )
 
   return (
@@ -68,12 +68,12 @@ function App() {
       <div className="text-center">{getMessageArea()}</div>
 
       {/* Main content area */}
-      <div className="container-fluid bd-gutter grey-background align-items-start card-box">
+      <div className="container-fluid bd-gutter grey-background align-items-start card-box full-page-container">
         {routes}
       </div>
 
       {/* Footer */}
-      <footer className="footer bd-footer py-2 py-md-3 mt-4 bg-black position-relative">
+      <footer className="footer bd-footer py-2 py-md-3 bg-black position-relative">
         <FooterComponent />
       </footer>
     </div>

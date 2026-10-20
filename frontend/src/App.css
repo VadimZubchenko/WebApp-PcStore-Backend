@@ -88,7 +88,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.16),
+    0 3px 6px rgba(0, 0, 0, 0.23);
   border-radius: 3px;
 
   &:focus {
@@ -152,7 +154,7 @@
 
   background: #e2e1e0;
   color: #333;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 300;
   font-size: 1rem;
 }
@@ -199,7 +201,10 @@
 }
 
 .card-box {
-  width: 95%;
   border-radius: 2%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.full-page-container {
+  min-height: 100vh;
 }
