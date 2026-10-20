@@ -57,8 +57,7 @@ services:
       default:
 
       production_proxy:
-        aliases:
-          - dev-nginx    
+
     
 networks:
     default:
